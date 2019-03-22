@@ -1,6 +1,0 @@
-.map{
-    -fx-background-image: url("/images/map.png"); 
-    -fx-background-position: center center;
-    -fx-background-repeat: no-repeat;
-    -fx-background-size: cover, auto;
-}
