@@ -24,14 +24,15 @@ public class Controller {
 	}
 
 	private void addNode(double x, double y, ImageView mapPane) {
-		System.out.println("Adding Node");
-		ImageView marker = new ImageView("/images/node.png");
-		marker.setFitWidth(15);
-		marker.setFitHeight(15);
-		marker.setX(x);
-		marker.setY(y);
-		mapAnchor.getChildren().add(marker);
-		
+		mapAnchor.getChildren().add(createNode(x, y));
+	}
+	
+	private ImageView createNode(double x, double y)
+	{
+		ImageView node = new ImageView("/images/node.png");
+		node.setX(x-12);
+		node.setY(y-16);
+		return node;
 	}
 
 }
