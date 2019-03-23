@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 public class Route {
 static ArrayList<Route> allRouts;
-static int nextRouteIndex = 0;
 Waypoint waypointOne,waypointTwo;
 int dangerLevel,roughtLenght,roughtDifficulty,index;
 
@@ -15,9 +14,9 @@ int dangerLevel,roughtLenght,roughtDifficulty,index;
 		roughtLenght = lenght;
 		roughtDifficulty = difficulty;
 		
-		index = nextRouteIndex;
-		nextRouteIndex++;
 		allRouts.add(this);
+		start.addRoute(this);
+		end.addRoute(this);
 	}
 
 }

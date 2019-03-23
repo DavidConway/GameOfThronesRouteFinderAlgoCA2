@@ -12,9 +12,11 @@ String waypointName;
 		mapX = X;
 		mapY = Y;
 		waypointName = name;
+		allWaypoints.add(this);
 	}
 	
-	void addRoute(Route newRouth){
-		connectedRoutesInde
+	void addRoute(Route newRout){
+		int newRoughtID = Route.allRouts.indexOf(newRout);
+		connectedRoutesIndexes.add(newRoughtID);
 	}
 }
