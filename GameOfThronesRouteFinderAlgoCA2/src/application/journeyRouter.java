@@ -4,45 +4,56 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class journeyRouter {
-ArrayList<LinkedList<Waypoint>> possibleRoutes;
+static ArrayList<LinkedList<Waypoint>> possibleRoutes;
 static ArrayList<LinkedList<Waypoint>> finalRouths;
 
-	void router(Waypoint start, Waypoint end, Waypoint[] goTo, Waypoint[] avoid, int maxLenght, int maxDanger, int maxDifficulty, int maxNumbersOfStops){
+	static void router(Waypoint start, Waypoint end, Waypoint[] goTo, Waypoint[] avoid, int maxLenght, int maxDanger, int maxDifficulty, int maxNumbersOfStops, int show){
 		generateRouts(maxNumbersOfStops);
-		removeDanger(maxDanger);
-		removeLong(maxLenght);
-		removeHard(maxDifficulty);
 		removeAvoid(avoid);
 		ensureWaypoints(goTo);
+		
+		switch(show) {
+		case 1:
+			getEasyest();
+			break;
+		case 2: 
+			getShortest();
+			break;
+		case 3:
+			getSafest();
+			break;
+		}
+		
+
 		finalRouths = possibleRoutes;
 	}
 
-	private void ensureWaypoints(Waypoint[] goTo) {
+	private static void ensureWaypoints(Waypoint[] goTo) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	private void removeAvoid(Waypoint[] avoid) {
+	private static void removeAvoid(Waypoint[] avoid) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	private void removeHard(int maxDifficulty) {
+	private static void getEasyest() {
 		// TODO Auto-generated method stub
 		
 	}
 
-	private void removeLong(int maxLenght) {
+	private static void getShortest() {
 		// TODO Auto-generated method stub
 		
 	}
 
-	private void removeDanger(int maxDanger) {
+	private static void getSafest() {
 		// TODO Auto-generated method stub
 		
 	}
 
-	private void generateRouts(int maxNumbersOfStops) {
+	private static void generateRouts(int maxNumbersOfStops) {
 		// TODO Auto-generated method stub
 		
 	}
