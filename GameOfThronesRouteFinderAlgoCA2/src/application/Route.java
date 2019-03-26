@@ -18,5 +18,21 @@ int dangerLevel,roughtLenght,roughtDifficulty,index;
 		start.addRoute(this);
 		end.addRoute(this);
 	}
+	
+	public void deleteRoute() {
+		Integer thisIndex = Route.allRouts.indexOf(this);
+		for(Waypoint check: Waypoint.allWaypoints) {
+			ArrayList<Integer> checksRoute = check.getConnectedRoughts();	
+			if (checksRoute.contains(thisIndex)){
+				checksRoute.remove(thisIndex);
+			}
+			for(Integer checkIndex: check.getConnectedRoughts()) {
+				if (checkIndex > thisIndex) {
+					checkIndex--;
+				}
+			}
+		}
+		allRouts.remove(this);
+	}
 
 }

@@ -1,10 +1,11 @@
 package application;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class journeyRouter {
-ArrayList<Waypoint[]> possibleRoutes;
-static ArrayList<Waypoint[]> finalRouths;
+ArrayList<LinkedList<Waypoint>> possibleRoutes;
+static ArrayList<LinkedList<Waypoint>> finalRouths;
 
 	void router(Waypoint start, Waypoint end, Waypoint[] goTo, Waypoint[] avoid, int maxLenght, int maxDanger, int maxDifficulty, int maxNumbersOfStops){
 		generateRouts(maxNumbersOfStops);
