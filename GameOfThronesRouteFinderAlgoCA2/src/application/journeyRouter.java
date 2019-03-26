@@ -23,8 +23,6 @@ static ArrayList<LinkedList<Waypoint>> finalRouths;
 			getSafest();
 			break;
 		}
-		
-
 		finalRouths = possibleRoutes;
 	}
 
