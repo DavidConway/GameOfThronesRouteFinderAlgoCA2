@@ -8,15 +8,24 @@ import jdk.internal.org.objectweb.asm.util.CheckAnnotationAdapter;
 public class journeyRouter {
 static ArrayList<Journey> possibleRoutes;
 static ArrayList<Journey> finalRouths;
+static Waypoint[] avoidWaypoints;
+static Waypoint[] goToWaypoints;
 static int showMode = 0;
 private static Journey currentJourney; 
 	public static void router(Waypoint start, Waypoint end, Waypoint[] goTo, Waypoint[] avoid, int show){
-		Journey startPoint  = new Journey();
+		avoidWaypoints = avoid;
+		Journey startPoint= new Journey();
 		showMode= show;
 		startPoint.getWaypoints().add(start);
 		while(finalRouths.size() != 3) {
-		currentJourney = extendPoint();
-		currentJourney.extenOut();
+			currentJourney = extendPoint();
+			currentJourney.extenOut();
+			if(currentJourney.getWaypoints().getLast() == end) {
+				if(currentJourney.goseToAllPoints()) {
+					finalRouths.add(currentJourney);
+				}
+				possibleRoutes.remove(currentJourney);
+			}
 		}
 		
 	}

@@ -15,22 +15,57 @@ public class Journey {
 	}
 	
 	public void extenOut() {
-		Waypoint endPoint = waypoints.getLast();
+		Waypoint endPoint = waypoints.getLast(); //gets the end point of the current journey
 		for(Integer routeIndex: endPoint.getConnectedRoughts()) {
-			Route newRoute = Route.allRouts.get(routeIndex);
-			Waypoint extendOut = newRoute.getOpposite(endPoint);
-			Journey newJourney = new Journey();
+			Route newRoute = Route.allRouts.get(routeIndex); // gets the route that will be used
+			Waypoint extendOut = newRoute.getOpposite(endPoint);// gets the next waypoint
+			Journey newJourney = new Journey(); // sets up for the new journey
 			
-			newJourney.setWaypoints(this.getWaypoints());
-			newJourney.getWaypoints().addLast(extendOut);
+			newJourney.setWaypoints(this.getWaypoints());//Copys the waypoints to the new journey
+			if(newJourney.checkNotDoubleBack(extendOut) && checkNotAvoid(extendOut) ) {
+				newJourney.getWaypoints().addLast(extendOut);//adds the next waypoint	
+				newJourney.lenght= this.lenght + newRoute.roughtLenght;//Fingers out the journey values
+				newJourney.danger= this.danger + newRoute.dangerLevel;
+				newJourney.difficlty= this.difficlty + newRoute.roughtDifficulty;
+				journeyRouter.possibleRoutes.add(newJourney);// adds the journey to the possible routes
+			}
 			
-			newJourney.lenght= this.lenght + newRoute.roughtLenght;
-			newJourney.danger= this.danger + newRoute.dangerLevel;
-			newJourney.difficlty= this.difficlty + newRoute.roughtDifficulty;
-			journeyRouter.possibleRoutes.add(newJourney);
 		}
-		journeyRouter.possibleRoutes.remove(this);
+		journeyRouter.possibleRoutes.remove(this);//removes the current journey sins it has been extended
 	}
+	
+	private boolean checkNotAvoid(Waypoint check) {
+		boolean safe = true;
+		if(journeyRouter.avoidWaypoints != null) {	
+			for(Waypoint avoid : journeyRouter.avoidWaypoints) {
+				if(check == avoid) {
+					safe = false;
+				}
+			}
+		}
+		return safe;
+	}
+	
+	public boolean goseToAllPoints() {
+		boolean allPoints = true;
+		if(journeyRouter.avoidWaypoints != null) {	
+			for(Waypoint goTo : journeyRouter.goToWaypoints) {
+				if(!this.getWaypoints().contains(goTo)) {
+					allPoints = false;
+				}	
+			}
+		}
+		return allPoints;
+	}
+	private boolean checkNotDoubleBack(Waypoint check) {
+		if(this.getWaypoints().contains(check)) {
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
+
 	
 	public LinkedList<Waypoint> getWaypoints() {
 		return waypoints;
@@ -56,4 +91,6 @@ public class Journey {
 	public void setDifficlty(int difficlty) {
 		this.difficlty = difficlty;
 	}
+	
+	
 }
