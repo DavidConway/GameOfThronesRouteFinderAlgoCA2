@@ -4,9 +4,32 @@ import java.util.LinkedList;
 
 public class Journey {
 	static LinkedList<Waypoint> waypoints;
+	int lenght = 0;
+	int danger = 0;
+	int difficlty = 0;
 	
+	
+	
+
 	public Journey(){
-		
+	}
+	
+	public void extenOut() {
+		Waypoint endPoint = waypoints.getLast();
+		for(Integer routeIndex: endPoint.getConnectedRoughts()) {
+			Route newRoute = Route.allRouts.get(routeIndex);
+			Waypoint extendOut = newRoute.getOpposite(endPoint);
+			Journey newJourney = new Journey();
+			
+			newJourney.setWaypoints(this.getWaypoints());
+			newJourney.getWaypoints().addLast(extendOut);
+			
+			newJourney.lenght= this.lenght + newRoute.roughtLenght;
+			newJourney.danger= this.danger + newRoute.dangerLevel;
+			newJourney.difficlty= this.difficlty + newRoute.roughtDifficulty;
+			journeyRouter.possibleRoutes.add(newJourney);
+		}
+		journeyRouter.possibleRoutes.remove(this);
 	}
 	
 	public LinkedList<Waypoint> getWaypoints() {
@@ -27,15 +50,10 @@ public class Journey {
 	public void setDanger(int danger) {
 		this.danger = danger;
 	}
-	public int getDifaculty() {
-		return difaculty;
+	public int getDifficlty() {
+		return difficlty;
 	}
-	public void setDifaculty(int difaculty) {
-		this.difaculty = difaculty;
+	public void setDifficlty(int difficlty) {
+		this.difficlty = difficlty;
 	}
-	int lenght = 0;
-	int danger = 0;
-	int difaculty = 0;
-	
-	
 }

@@ -34,5 +34,14 @@ int dangerLevel,roughtLenght,roughtDifficulty,index;
 		}
 		allRouts.remove(this);
 	}
+	
+	public Waypoint getOpposite(Waypoint in) {
+		if(in == waypointOne) {
+			return waypointTwo;
+		}
+		else {
+			return waypointOne;
+		}
+	}
 
 }

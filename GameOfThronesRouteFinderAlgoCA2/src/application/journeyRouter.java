@@ -9,11 +9,16 @@ public class journeyRouter {
 static ArrayList<Journey> possibleRoutes;
 static ArrayList<Journey> finalRouths;
 static int showMode = 0;
-	static void router(Waypoint start, Waypoint end, Waypoint[] goTo, Waypoint[] avoid, int show){
+private static Journey currentJourney; 
+	public static void router(Waypoint start, Waypoint end, Waypoint[] goTo, Waypoint[] avoid, int show){
 		Journey startPoint  = new Journey();
-		startPoint.getWaypoints().add(start);
 		showMode= show;
-
+		startPoint.getWaypoints().add(start);
+		while(finalRouths.size() != 3) {
+		currentJourney = extendPoint();
+		currentJourney.extenOut();
+		}
+		
 	}
 
 	private static void ensureWaypoints(Waypoint[] goTo) {
@@ -65,7 +70,7 @@ static int showMode = 0;
 			break;
 		case 2:
 			for(Journey check: possibleRoutes) {
-				if(check.getDifaculty() < reternJourney.getDifaculty() || reternJourney == null) {
+				if(check.getDifficlty() < reternJourney.getDifficlty() || reternJourney == null) {
 					reternJourney = check;
 				}
 			}
