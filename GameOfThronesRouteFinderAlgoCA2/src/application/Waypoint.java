@@ -7,7 +7,7 @@ import javafx.scene.image.ImageView;
 
 public class Waypoint {
 public static ArrayList<Waypoint> allWaypoints = new ArrayList<>();
-private ArrayList<Integer> connectedRoutesIndexes;
+private ArrayList<Integer> connectedRoutesIndexes = new ArrayList<>();
 private double mapX,mapY;
 private TextField nameField;
 private ImageView iView;

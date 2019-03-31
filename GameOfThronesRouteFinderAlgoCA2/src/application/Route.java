@@ -3,7 +3,7 @@ package application;
 import java.util.ArrayList;
 
 public class Route {
-static ArrayList<Route> allRouts;
+static ArrayList<Route> allRouts = new ArrayList<>();
 Waypoint waypointOne,waypointTwo;
 int dangerLevel,roughtLenght,roughtDifficulty,index;
 
