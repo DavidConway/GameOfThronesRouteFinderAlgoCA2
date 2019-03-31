@@ -4,22 +4,51 @@ import java.util.ArrayList;
 
 public class Route {
 static ArrayList<Route> allRouts = new ArrayList<>();
-Waypoint waypointOne,waypointTwo;
-int dangerLevel,roughtLenght,roughtDifficulty,index;
+Waypoint start, end;
+int danger, difficulty, index;
+double length;
 
-	Route(Waypoint start, Waypoint end, int danger, int lenght,int difficulty){
-		waypointOne = start;
-		waypointTwo = end;
-		dangerLevel = danger;
-		roughtLenght = lenght;
-		roughtDifficulty = difficulty;
+	Route(Waypoint start, Waypoint end, int danger, double length,int difficulty){
+		this.start = start;
+		this.end = end;
+		this.danger = danger;
+		this.length = length;
+		this.difficulty = difficulty;
 		
 		allRouts.add(this);
 		start.addRoute(this);
 		end.addRoute(this);
 	}
+	Route(Waypoint start, Waypoint end, double length)
+	{
+		this.start = start;
+		this.end = end;
+		this.length = length;
+		
+	}
 	
-	
+	public Route() {
+		
+	}
+	public Waypoint getStart()
+	{
+		return start;
+	}
+
+	public void setStart(Waypoint waypoint)
+	{
+		this.start = waypoint;
+	}
+	public Waypoint getEnd()
+	{
+		return end;
+	}
+	public void setEnd(Waypoint end)
+	{
+		this.end = end;
+	}
+
+
 	public void deleteRoute() {
 		Integer thisIndex = Route.allRouts.indexOf(this);
 		for(Waypoint check: Waypoint.allWaypoints) {
@@ -37,11 +66,11 @@ int dangerLevel,roughtLenght,roughtDifficulty,index;
 	}
 	
 	public Waypoint getOpposite(Waypoint in) {
-		if(in == waypointOne) {
-			return waypointTwo;
+		if(in == start) {
+			return end;
 		}
 		else {
-			return waypointOne;
+			return end;
 		}
 	}
 

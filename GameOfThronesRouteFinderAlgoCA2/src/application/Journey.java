@@ -4,7 +4,7 @@ import java.util.LinkedList;
 
 public class Journey {
 	static LinkedList<Waypoint> waypoints;
-	int lenght = 0;
+	double lenght = 0;
 	int danger = 0;
 	int difficlty = 0;
 	
@@ -21,9 +21,9 @@ public class Journey {
 			newJourney.setWaypoints(this.getWaypoints());//Copys the waypoints to the new journey
 			if(newJourney.checkNotDoubleBack(extendOut) && checkNotAvoid(extendOut) ) {
 				newJourney.getWaypoints().addLast(extendOut);//adds the next waypoint	
-				newJourney.lenght= this.lenght + newRoute.roughtLenght;//Fingers out the journey values
-				newJourney.danger= this.danger + newRoute.dangerLevel;
-				newJourney.difficlty= this.difficlty + newRoute.roughtDifficulty;
+				newJourney.lenght= this.lenght + newRoute.length;//Fingers out the journey values
+				newJourney.danger= this.danger + newRoute.danger;
+				newJourney.difficlty= this.difficlty + newRoute.difficulty;
 				journeyRouter.possibleRoutes.add(newJourney);// adds the journey to the possible routes
 			}
 			
@@ -70,7 +70,7 @@ public class Journey {
 	public void setWaypoints(LinkedList<Waypoint> waypoints) {
 		Journey.waypoints = waypoints;
 	}
-	public int getLenght() {
+	public double getLenght() {
 		return lenght;
 	}
 	public void setLenght(int lenght) {

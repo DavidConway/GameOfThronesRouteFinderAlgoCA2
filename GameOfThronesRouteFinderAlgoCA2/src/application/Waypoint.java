@@ -11,7 +11,6 @@ private ArrayList<Integer> connectedRoutesIndexes = new ArrayList<>();
 private double mapX,mapY;
 private TextField nameField;
 private ImageView iView;
-//private String waypointName;
 
 	Waypoint(double x, double y){
 		mapX = x;
