@@ -1,20 +1,19 @@
 package application;
 
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Side;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Screen;
 
 public class Controller {
 	@FXML
 	AnchorPane mapAnchor;
+	
+	ContextMenu activeMenu = new ContextMenu();
 
 	Image map = new Image("/images/map.png");
 	ImageView mapPane = new ImageView(map);
@@ -22,20 +21,29 @@ public class Controller {
 	@FXML
 	public void initialize()
 	{
+		
 		mapPane.setPreserveRatio(true);
 		mapAnchor.getChildren().add(mapPane);
 		mapPane.setFitWidth(Screen.getPrimary().getVisualBounds().getWidth());
 		mapAnchor.setMinWidth(mapPane.getFitWidth());
 		mapPane.setOnMouseClicked(e-> baseMenu(e.getX(), e.getY()).show(mapAnchor, null, e.getX(), e.getY()));
 	}
+		
 	
 	public ContextMenu baseMenu(double x, double y)
 	{
-		final ContextMenu contextMenu = new ContextMenu();
+		if (activeMenu.isShowing())
+		{
+		activeMenu.hide();
+		}
+		activeMenu = new ContextMenu();
 		MenuItem item0 = new MenuItem("Add Waypoint");
 		item0.setOnAction(e-> addNode(x,y, mapPane));
-		contextMenu.getItems().addAll(item0);
-		return contextMenu;
+		activeMenu.getItems().clear();
+		activeMenu.getItems().addAll(item0);
+		
+		return activeMenu;
+		
 	}
 
 	private void addNode(double x, double y, ImageView mapPane) {
@@ -53,7 +61,11 @@ public class Controller {
 	
 	public ContextMenu newMenu(Waypoint waypoint)
 	{
-		final ContextMenu contextMenu = new ContextMenu();
+		if (activeMenu.isShowing())
+		{
+		activeMenu.hide();
+		}
+		activeMenu = new ContextMenu();
 		
 		MenuItem item1 = new MenuItem("Set as starting positon");
 		item1.setOnAction(e-> setStart(waypoint));
@@ -65,8 +77,8 @@ public class Controller {
 		item5.setOnAction(e-> setName(waypoint));
 		MenuItem item6 = new MenuItem("Remove Waypoint");
 		item6.setOnAction(e-> remove(waypoint));
-		contextMenu.getItems().addAll(item1, item2, item3, item4, item5, item6);
-		return contextMenu;
+		activeMenu.getItems().addAll(item1, item2, item3, item4, item5, item6);
+		return activeMenu;
 	}
 
 	private void setName(Waypoint waypoint)
