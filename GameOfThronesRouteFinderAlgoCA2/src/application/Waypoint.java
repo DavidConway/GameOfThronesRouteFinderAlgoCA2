@@ -22,6 +22,10 @@ private ImageView iView;
 		iView.setPreserveRatio(true);
 		iView.setX(x-12);
 		iView.setY(y-16);
+		nameField = new TextField("");
+		nameField.getStyleClass().add("mapName");
+		nameField.setLayoutY(y+ 10);
+		nameField.setLayoutX(x -20);
 		allWaypoints.add(this);
 	}
 	
@@ -58,6 +62,11 @@ private ImageView iView;
 	public ImageView getIView()
 	{
 		return iView;
+	}
+	
+	public TextField getName()
+	{
+		return nameField;
 	}
 	
 }

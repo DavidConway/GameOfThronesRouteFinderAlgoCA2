@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.Side;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ContextMenuEvent;
@@ -25,7 +26,16 @@ public class Controller {
 		mapAnchor.getChildren().add(mapPane);
 		mapPane.setFitWidth(Screen.getPrimary().getVisualBounds().getWidth());
 		mapAnchor.setMinWidth(mapPane.getFitWidth());
-		mapPane.setOnMouseClicked(e-> addNode(e.getX(), e.getY(), mapPane));
+		mapPane.setOnMouseClicked(e-> baseMenu(e.getX(), e.getY()).show(mapAnchor, null, e.getX(), e.getY()));
+	}
+	
+	public ContextMenu baseMenu(double x, double y)
+	{
+		final ContextMenu contextMenu = new ContextMenu();
+		MenuItem item0 = new MenuItem("Add Waypoint");
+		item0.setOnAction(e-> addNode(x,y, mapPane));
+		contextMenu.getItems().addAll(item0);
+		return contextMenu;
 	}
 
 	private void addNode(double x, double y, ImageView mapPane) {
@@ -44,6 +54,7 @@ public class Controller {
 	public ContextMenu newMenu(Waypoint waypoint)
 	{
 		final ContextMenu contextMenu = new ContextMenu();
+		
 		MenuItem item1 = new MenuItem("Set as starting positon");
 		item1.setOnAction(e-> setStart(waypoint));
 		MenuItem item2 = new MenuItem("Set as destination");
@@ -51,13 +62,31 @@ public class Controller {
 		MenuItem item3 = new MenuItem("Add route");
 		MenuItem item4 = new MenuItem("Remove route");
 		MenuItem item5 = new MenuItem("Edit Name");
-		item5.setOnAction(e-> mapAnchor.getChildren().remove(waypoint));
+		item5.setOnAction(e-> setName(waypoint));
 		MenuItem item6 = new MenuItem("Remove Waypoint");
-		item6.setOnAction(e-> mapAnchor.getChildren().remove(waypoint.getIView()));
+		item6.setOnAction(e-> remove(waypoint));
 		contextMenu.getItems().addAll(item1, item2, item3, item4, item5, item6);
 		return contextMenu;
 	}
 
+	private void setName(Waypoint waypoint)
+	{
+		if (mapAnchor.getChildren().contains(waypoint.getName()))
+		{
+			waypoint.getName().requestFocus(); 
+		}
+		else
+		{
+		mapAnchor.getChildren().add(waypoint.getName());
+		waypoint.getName().requestFocus();
+		}
+	}
+	
+	private void remove(Waypoint waypoint)
+	{
+		mapAnchor.getChildren().remove(waypoint.getIView());
+		mapAnchor.getChildren().remove(waypoint.getName());
+	}
 	private Object setEnd(Waypoint waypoint) {
 		return null;
 	}
