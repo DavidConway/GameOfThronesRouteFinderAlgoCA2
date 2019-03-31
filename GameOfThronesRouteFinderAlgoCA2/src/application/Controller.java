@@ -1,11 +1,13 @@
 package application;
 
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Side;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Screen;
 
@@ -27,21 +29,23 @@ public class Controller {
 	}
 
 	private void addNode(double x, double y, ImageView mapPane) {
-		mapAnchor.getChildren().add(createNode(x, y));
+		mapAnchor.getChildren().add(createNode(x, y).getIView());
 	}
 	
-	private ImageView createNode(double x, double y)
+	private Waypoint createNode(double x, double y)
 	{
-		//Waypoint waypoint = new Waypoint(x, y);
+		Waypoint waypoint = new Waypoint(x, y);
+		/*
 		ImageView node = new ImageView("/images/waypoint.png");
-		node.setMouseTransparent(false);
 		node.setPickOnBounds(true);
 		node.setFitWidth(20);
 		node.setPreserveRatio(true);
 		node.setX(x-12);
 		node.setY(y-16);
-		node.setOnMouseClicked(e-> newMenu(node).show(node, Side.BOTTOM, 0, 0));
-		return node;
+		*/
+		ImageView iView = waypoint.getIView();
+		iView.setOnMouseClicked(e-> newMenu(iView).show(iView, Side.BOTTOM, 0, 0));
+		return waypoint;
 	}
 
 	
@@ -55,7 +59,9 @@ public class Controller {
 		MenuItem item3 = new MenuItem("Add route");
 		MenuItem item4 = new MenuItem("Remove route");
 		MenuItem item5 = new MenuItem("Edit Name");
-		contextMenu.getItems().addAll(item1, item2, item3, item4, item5);
+		MenuItem item6 = new MenuItem("Remove Waypoint");
+		item6.setOnAction(e-> mapAnchor.getChildren().remove(node));
+		contextMenu.getItems().addAll(item1, item2, item3, item4, item5, item6);
 		return contextMenu;
 	}
 
