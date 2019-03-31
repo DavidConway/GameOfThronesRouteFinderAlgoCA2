@@ -8,9 +8,6 @@ public class Journey {
 	int danger = 0;
 	int difficlty = 0;
 	
-	
-	
-
 	public Journey(){
 	}
 	
@@ -90,6 +87,15 @@ public class Journey {
 	}
 	public void setDifficlty(int difficlty) {
 		this.difficlty = difficlty;
+	}
+
+	@Override
+	public String toString() {
+		String Out = "";
+		for(Waypoint point: this.waypoints) {
+			Out = Out+ "X" + point.getMapX() + "Y" + point.getMapY() + "-->";
+		}
+		return Out;
 	}
 	
 	
