@@ -8,10 +8,9 @@ private ArrayList<Integer> connectedRoutesIndexes;
 private double mapX,mapY;
 private String waypointName;
 
-	Waypoint(double X, double Y, String name){
+	Waypoint(double X, double Y){
 		mapX = X;
 		mapY = Y;
-		waypointName = name;
 		allWaypoints.add(this);
 	}
 	
