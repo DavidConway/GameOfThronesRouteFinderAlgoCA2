@@ -97,6 +97,4 @@ public class Journey {
 		}
 		return Out;
 	}
-	
-	
 }
