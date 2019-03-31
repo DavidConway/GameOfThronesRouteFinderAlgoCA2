@@ -16,13 +16,14 @@ private String waypointName;
 	Waypoint(double x, double y){
 		mapX = x;
 		mapY = y;
-		//allWaypoints.add(this);
+		
 		iView = new ImageView("/images/waypoint.png");
 		iView.setPickOnBounds(true);
 		iView.setFitWidth(20);
 		iView.setPreserveRatio(true);
 		iView.setX(x-12);
 		iView.setY(y-16);
+		//allWaypoints.add(this);
 	}
 	
 	public void addRoute(Route newRoute){
