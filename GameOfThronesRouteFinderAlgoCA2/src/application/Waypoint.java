@@ -9,21 +9,20 @@ public class Waypoint {
 public static ArrayList<Waypoint> allWaypoints = new ArrayList<>();
 private ArrayList<Integer> connectedRoutesIndexes;
 private double mapX,mapY;
-private TextField textField;
+private TextField nameField;
 private ImageView iView;
-private String waypointName;
+//private String waypointName;
 
 	Waypoint(double x, double y){
 		mapX = x;
 		mapY = y;
-		
 		iView = new ImageView("/images/waypoint.png");
 		iView.setPickOnBounds(true);
 		iView.setFitWidth(20);
 		iView.setPreserveRatio(true);
 		iView.setX(x-12);
 		iView.setY(y-16);
-		//allWaypoints.add(this);
+		allWaypoints.add(this);
 	}
 	
 	public void addRoute(Route newRoute){

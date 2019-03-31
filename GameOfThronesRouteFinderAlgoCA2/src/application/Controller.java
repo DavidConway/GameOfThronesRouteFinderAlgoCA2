@@ -36,32 +36,33 @@ public class Controller {
 	{
 		Waypoint waypoint = new Waypoint(x, y);
 		ImageView iView = waypoint.getIView();
-		iView.setOnMouseClicked(e-> newMenu(iView).show(iView, Side.BOTTOM, 0, 0));
+		iView.setOnMouseClicked(e-> newMenu(waypoint).show(iView, Side.BOTTOM, 0, 0));
 		return waypoint;
 	}
 
 	
-	public ContextMenu newMenu(ImageView node)
+	public ContextMenu newMenu(Waypoint waypoint)
 	{
 		final ContextMenu contextMenu = new ContextMenu();
 		MenuItem item1 = new MenuItem("Set as starting positon");
-		item1.setOnAction(e-> setStart(node));
+		item1.setOnAction(e-> setStart(waypoint));
 		MenuItem item2 = new MenuItem("Set as destination");
-		item1.setOnAction(e-> setEnd(node));
+		item1.setOnAction(e-> setEnd(waypoint));
 		MenuItem item3 = new MenuItem("Add route");
 		MenuItem item4 = new MenuItem("Remove route");
 		MenuItem item5 = new MenuItem("Edit Name");
+		item5.setOnAction(e-> mapAnchor.getChildren().remove(waypoint));
 		MenuItem item6 = new MenuItem("Remove Waypoint");
-		item6.setOnAction(e-> mapAnchor.getChildren().remove(node));
+		item6.setOnAction(e-> mapAnchor.getChildren().remove(waypoint.getIView()));
 		contextMenu.getItems().addAll(item1, item2, item3, item4, item5, item6);
 		return contextMenu;
 	}
 
-	private Object setEnd(ImageView node) {
+	private Object setEnd(Waypoint waypoint) {
 		return null;
 	}
 
-	private Object setStart(ImageView node) {
+	private Object setStart(Waypoint waypoint) {
 
 		return null;
 	}
