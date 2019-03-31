@@ -1,6 +1,9 @@
 package application;
 
 import javafx.fxml.FXML;
+import javafx.geometry.Side;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -29,10 +32,40 @@ public class Controller {
 	
 	private ImageView createNode(double x, double y)
 	{
-		ImageView node = new ImageView("/images/node.png");
+		//Waypoint waypoint = new Waypoint(x, y);
+		ImageView node = new ImageView("/images/waypoint.png");
+		node.setMouseTransparent(false);
+		node.setPickOnBounds(true);
+		node.setFitWidth(20);
+		node.setPreserveRatio(true);
 		node.setX(x-12);
 		node.setY(y-16);
+		node.setOnMouseClicked(e-> newMenu(node).show(node, Side.BOTTOM, 0, 0));
 		return node;
+	}
+
+	
+	public ContextMenu newMenu(ImageView node)
+	{
+		final ContextMenu contextMenu = new ContextMenu();
+		MenuItem item1 = new MenuItem("Set as starting positon");
+		item1.setOnAction(e-> setStart(node));
+		MenuItem item2 = new MenuItem("Set as destination");
+		item1.setOnAction(e-> setEnd(node));
+		MenuItem item3 = new MenuItem("Add route");
+		MenuItem item4 = new MenuItem("Remove route");
+		MenuItem item5 = new MenuItem("Edit Name");
+		contextMenu.getItems().addAll(item1, item2, item3, item4, item5);
+		return contextMenu;
+	}
+
+	private Object setEnd(ImageView node) {
+		return null;
+	}
+
+	private Object setStart(ImageView node) {
+
+		return null;
 	}
 
 }
