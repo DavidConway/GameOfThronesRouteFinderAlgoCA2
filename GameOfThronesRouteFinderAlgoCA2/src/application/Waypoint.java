@@ -2,16 +2,27 @@ package application;
 
 import java.util.ArrayList;
 
+import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+
 public class Waypoint {
 public static ArrayList<Waypoint> allWaypoints;
 private ArrayList<Integer> connectedRoutesIndexes;
 private double mapX,mapY;
+private TextField textField;
+private ImageView iView;
 private String waypointName;
 
-	Waypoint(double X, double Y){
-		mapX = X;
-		mapY = Y;
-		allWaypoints.add(this);
+	Waypoint(double x, double y){
+		mapX = x;
+		mapY = y;
+		//allWaypoints.add(this);
+		iView = new ImageView("/images/waypoint.png");
+		iView.setPickOnBounds(true);
+		iView.setFitWidth(20);
+		iView.setPreserveRatio(true);
+		iView.setX(x-12);
+		iView.setY(y-16);
 	}
 	
 	public void addRoute(Route newRoute){
@@ -42,6 +53,11 @@ private String waypointName;
 			removeRoute.deleteRoute();
 		}
 		allWaypoints.remove(this);
+	}
+	
+	public ImageView getIView()
+	{
+		return iView;
 	}
 	
 }
