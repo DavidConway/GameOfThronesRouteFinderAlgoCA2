@@ -23,7 +23,17 @@ public class Main extends Application {
 	}
 
 	public static void main(String[] args) {
-		launch(args);
+		//launch(args);
+		Waypoint one = new Waypoint(1,1);
+		Waypoint two = new Waypoint(2,2);
+		Waypoint three = new Waypoint (3,3);
+		Route oneTwo = new Route(one,two,1.0);
+		Route twoThree = new Route(two,three,1.0);
+		for(Journey j: journeyRouter.router(one, two, 0)) {
+			System.out.println(j.toString());
+		}
 		System.out.println("BattlePass is shit");
 	}
+	
+	
 }

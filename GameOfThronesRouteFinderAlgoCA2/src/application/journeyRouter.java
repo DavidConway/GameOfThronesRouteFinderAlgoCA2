@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class journeyRouter {
-	static ArrayList<Journey> possibleRoutes;
-	static ArrayList<Journey> finalRouths;
+	static ArrayList<Journey> possibleRoutes = new ArrayList<Journey>();
+	static ArrayList<Journey> finalRouths = new ArrayList<Journey>();
 	static Waypoint[] avoidWaypoints = null;
 	static Waypoint[] goToWaypoints = null;
 	static int showMode = 0;
@@ -16,6 +16,7 @@ public class journeyRouter {
 		Journey startPoint = new Journey();
 		showMode = show;
 		startPoint.getWaypoints().add(start);
+		possibleRoutes.add(startPoint);
 		while (finalRouths.size() != 3) {
 			currentJourney = extendPoint();
 			currentJourney.extenOut();
@@ -34,7 +35,8 @@ public class journeyRouter {
 		Journey startPoint = new Journey();
 		showMode = show;
 		startPoint.getWaypoints().add(start);
-		while (finalRouths.size() != 3) {
+		possibleRoutes.add(startPoint);
+		while (finalRouths.size() != 1) {
 			currentJourney = extendPoint();
 			currentJourney.extenOut();
 			if (currentJourney.getWaypoints().getLast() == end) {
@@ -81,7 +83,10 @@ public class journeyRouter {
 		switch (showMode) {
 		case 0:
 			for (Journey check : possibleRoutes) {
-				if (check.getLenght() < reternJourney.getLenght() || reternJourney == null) {
+				if(reternJourney == null) {
+					reternJourney = check;
+				}
+				else if (check.getLenght() < reternJourney.getLenght() || reternJourney == null) {
 					reternJourney = check;
 				}
 			}
