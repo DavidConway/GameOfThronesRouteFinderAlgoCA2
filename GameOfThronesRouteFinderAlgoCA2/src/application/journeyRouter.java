@@ -6,12 +6,12 @@ import java.util.LinkedList;
 public class journeyRouter {
 	static ArrayList<Journey> possibleRoutes;
 	static ArrayList<Journey> finalRouths;
-	static Waypoint[] avoidWaypoints;
-	static Waypoint[] goToWaypoints;
+	static Waypoint[] avoidWaypoints = null;
+	static Waypoint[] goToWaypoints = null;
 	static int showMode = 0;
 	private static Journey currentJourney;
 
-	public static void router(Waypoint start, Waypoint end, Waypoint[] goTo, Waypoint[] avoid, int show) {
+	public static ArrayList<Journey> router(Waypoint start, Waypoint end, Waypoint[] goTo, Waypoint[] avoid, int show) {
 		avoidWaypoints = avoid;
 		Journey startPoint = new Journey();
 		showMode = show;
@@ -26,6 +26,23 @@ public class journeyRouter {
 				possibleRoutes.remove(currentJourney);
 			}
 		}
+		return finalRouths;
+
+	}
+	
+	public static ArrayList<Journey> router(Waypoint start, Waypoint end, int show) {
+		Journey startPoint = new Journey();
+		showMode = show;
+		startPoint.getWaypoints().add(start);
+		while (finalRouths.size() != 3) {
+			currentJourney = extendPoint();
+			currentJourney.extenOut();
+			if (currentJourney.getWaypoints().getLast() == end) {
+				finalRouths.add(currentJourney);
+				possibleRoutes.remove(currentJourney);
+			}
+		}
+		return finalRouths;
 
 	}
 

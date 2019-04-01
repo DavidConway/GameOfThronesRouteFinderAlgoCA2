@@ -5,8 +5,8 @@ import java.util.ArrayList;
 public class Route {
 	static ArrayList<Route> allRouts = new ArrayList<>();
 	Waypoint start, end;
-	int danger, difficulty, index;
-	double length;
+	int danger = 0, difficulty = 0;
+	double length = 0;
 
 	Route(Waypoint start, Waypoint end, int danger, double length, int difficulty) {
 		this.start = start;
