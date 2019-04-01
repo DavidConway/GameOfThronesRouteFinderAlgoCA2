@@ -1,9 +1,9 @@
 package application;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Side;
 import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -14,6 +14,15 @@ import javafx.stage.Screen;
 public class Controller {
 	@FXML
 	AnchorPane mapAnchor;
+
+	@FXML
+	private Label journeyStart, journeyEnd;
+
+	@FXML
+	private Label buildStart, buildEnd;
+
+	@FXML
+	private Label routeStart, routeEnd, routeLength, routeDifficulty, routeDanger;
 
 	ContextMenu activeMenu = new ContextMenu();
 	Route activeRoute = new Route();
@@ -67,15 +76,15 @@ public class Controller {
 		item1.setOnAction(e -> setStart(waypoint));
 		MenuItem item2 = new MenuItem("Set as destination");
 		item1.setOnAction(e -> setEnd(waypoint));
-		MenuItem item3 = new MenuItem("Connect route");
-		item3.setOnAction(e-> beginConnection(waypoint));
-		MenuItem item7 = new MenuItem("Connect route");
-		item7.setOnAction(e-> endConnection(waypoint));
-		MenuItem item4 = new MenuItem("Remove route");
-		MenuItem item5 = new MenuItem("Edit Name");
-		item5.setOnAction(e -> setName(waypoint));
-		MenuItem item6 = new MenuItem("Remove Waypoint");
-		item6.setOnAction(e -> remove(waypoint));
+		MenuItem item3 = new MenuItem("1st Route Connect");
+		item3.setOnAction(e -> beginConnection(waypoint));
+		MenuItem item4 = new MenuItem("2nd Route Connect");
+		item4.setOnAction(e -> endConnection(waypoint));
+		MenuItem item5 = new MenuItem("Remove route");
+		MenuItem item6 = new MenuItem("Edit Name");
+		item6.setOnAction(e -> setName(waypoint));
+		MenuItem item7 = new MenuItem("Remove Waypoint");
+		item7.setOnAction(e -> remove(waypoint));
 		activeMenu.getItems().addAll(item1, item2, item3, item4, item5, item6, item7);
 		return activeMenu;
 	}
@@ -83,46 +92,49 @@ public class Controller {
 	private void endConnection(Waypoint waypoint) {
 		endRoute = waypoint;
 		activeRoute.setEnd(waypoint);
-		if (checkConnection())
-		{
+		buildEnd.setText(waypoint.getName().getText());
+		if (checkConnection()) {
 			buildRoute();
-			activeRoute.setStart(null);
-			activeRoute.setEnd(null);
 		}
 	}
 
 	private boolean checkConnection() {
-		if (activeRoute.getStart() != null && activeRoute.getEnd() != null)
-		{
+		if (activeRoute.getStart() != null && activeRoute.getEnd() != null) {
 			return true;
-		}
-		else return false;
+		} else
+			return false;
 	}
 
 	private void beginConnection(Waypoint waypoint) {
 		startRoute = waypoint;
 		activeRoute.setStart(waypoint);
-		if (checkConnection())
-		{
+		buildStart.setText(waypoint.getName().getText());
+		if (checkConnection()) {
 			buildRoute();
-			activeRoute.setStart(null);
-			activeRoute.setEnd(null);
 		}
 	}
 
 	private void buildRoute() {
-		double w, h;	//width, height
+		double w, h; // width, height
 		w = Math.abs(startRoute.getMapX() - endRoute.getMapX());
 		h = Math.abs(startRoute.getMapY() - endRoute.getMapY());
-		
-		Route route = new Route(startRoute, endRoute, (Math.sqrt(w*w+h*h)));
-		Line line = new Line(startRoute.getMapX(), startRoute.getMapY(), endRoute.getMapX(),endRoute.getMapY());
-		line.setOnMousePressed(e-> displayRoute(route));
+
+		Route route = new Route(startRoute, endRoute, (Math.sqrt(w * w + h * h)));
+		Line line = new Line(startRoute.getMapX(), startRoute.getMapY(), endRoute.getMapX(), endRoute.getMapY());
+		line.setOnMousePressed(e -> displayRoute(route));
 		mapAnchor.getChildren().add(line);
+		buildStart.setText("(Empty)");
+		buildEnd.setText("(Empty)");
+		activeRoute.setStart(null);
+		activeRoute.setEnd(null);
 	}
 
 	private Object displayRoute(Route route) {
-		// TODO Auto-generated method stub
+		routeStart.setText(route.getStart().getName().getText());
+		routeEnd.setText(route.getEnd().getName().getText());
+		routeDanger.setText(route.getDanger() + "");
+		routeDifficulty.setText(route.getDifficulty() + "");
+		routeLength.setText(route.getLength() + "");
 		return null;
 	}
 

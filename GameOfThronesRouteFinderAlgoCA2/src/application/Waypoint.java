@@ -6,66 +6,64 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 
 public class Waypoint {
-public static ArrayList<Waypoint> allWaypoints = new ArrayList<>();
-private ArrayList<Integer> connectedRoutesIndexes = new ArrayList<>();
-private double mapX,mapY;
-private TextField nameField;
-private ImageView iView;
+	public static ArrayList<Waypoint> allWaypoints = new ArrayList<>();
+	private ArrayList<Integer> connectedRoutesIndexes = new ArrayList<>();
+	private double mapX, mapY;
+	private TextField nameField;
+	private ImageView iView;
 
-	Waypoint(double x, double y){
+	Waypoint(double x, double y) {
 		mapX = x;
 		mapY = y;
 		iView = new ImageView("/images/waypoint.png");
 		iView.setPickOnBounds(true);
 		iView.setFitWidth(20);
 		iView.setPreserveRatio(true);
-		iView.setX(x-12);
-		iView.setY(y-16);
+		iView.setX(x - 12);
+		iView.setY(y - 16);
 		nameField = new TextField("");
 		nameField.getStyleClass().add("mapName");
-		nameField.setLayoutY(y+ 10);
-		nameField.setLayoutX(x -20);
+		nameField.setLayoutY(y + 10);
+		nameField.setLayoutX(x - 20);
 		allWaypoints.add(this);
 	}
-	
-	public void addRoute(Route newRoute){
+
+	public void addRoute(Route newRoute) {
 		int newRoughtID = Route.allRouts.indexOf(newRoute);
 		connectedRoutesIndexes.add(newRoughtID);
 	}
-	
+
 	public void removeRoute(Route oldRoute) {
 		Integer removeInt = Route.allRouts.indexOf(oldRoute);
 		connectedRoutesIndexes.remove(removeInt);
 	}
-	
-	public ArrayList<Integer> getConnectedRoughts(){
+
+	public ArrayList<Integer> getConnectedRoughts() {
 		return this.connectedRoutesIndexes;
 	}
-	
+
 	public double getMapX() {
 		return mapX;
 	}
-	
+
 	public double getMapY() {
 		return mapY;
 	}
-	
+
 	public void deleteWaypoint() {
-		while(this.connectedRoutesIndexes != null) {
+		while (this.connectedRoutesIndexes != null) {
 			Route removeRoute = Route.allRouts.get(0);
 			removeRoute.deleteRoute();
 		}
 		allWaypoints.remove(this);
 	}
-	
-	public ImageView getIView()
-	{
+
+	public ImageView getIView() {
 		return iView;
 	}
-	
-	public TextField getName()
-	{
+
+	public TextField getName() {
 		return nameField;
 	}
-	
+
 }
