@@ -47,7 +47,7 @@ public class Controller {
 		}
 		activeMenu = new ContextMenu();
 		MenuItem item0 = new MenuItem("Add Waypoint");
-		item0.setOnAction(e -> addNode(x, y, mapPane));
+		item0.setOnAction(e -> addNode(x, y));
 		activeMenu.getItems().clear();
 		activeMenu.getItems().addAll(item0);
 
@@ -55,8 +55,11 @@ public class Controller {
 
 	}
 
-	private void addNode(double x, double y, ImageView mapPane) {
-		mapAnchor.getChildren().add(createNode(x, y).getIView());
+	private void addNode(double x, double y) {
+		Waypoint waypoint = createNode(x, y);
+		mapAnchor.getChildren().add(waypoint.getIView());
+		mapAnchor.getChildren().add(waypoint.getName());
+		waypoint.getName().requestFocus();
 	}
 
 	private Waypoint createNode(double x, double y) {
@@ -64,6 +67,15 @@ public class Controller {
 		ImageView iView = waypoint.getIView();
 		iView.setOnMouseClicked(e -> newMenu(waypoint).show(iView, Side.BOTTOM, 0, 0));
 		return waypoint;
+	}
+	
+	private void setName(Waypoint waypoint) {
+		if (mapAnchor.getChildren().contains(waypoint.getName())) {
+			waypoint.getName().requestFocus();
+		} else {
+			mapAnchor.getChildren().add(waypoint.getName());
+			waypoint.getName().requestFocus();
+		}
 	}
 
 	public ContextMenu newMenu(Waypoint waypoint) {
@@ -138,14 +150,7 @@ public class Controller {
 		return null;
 	}
 
-	private void setName(Waypoint waypoint) {
-		if (mapAnchor.getChildren().contains(waypoint.getName())) {
-			waypoint.getName().requestFocus();
-		} else {
-			mapAnchor.getChildren().add(waypoint.getName());
-			waypoint.getName().requestFocus();
-		}
-	}
+	
 
 	private void remove(Waypoint waypoint) {
 		mapAnchor.getChildren().remove(waypoint.getIView());
