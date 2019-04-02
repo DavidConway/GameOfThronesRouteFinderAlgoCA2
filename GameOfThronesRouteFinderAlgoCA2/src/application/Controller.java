@@ -5,6 +5,7 @@ import javafx.geometry.Side;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -22,7 +23,9 @@ public class Controller {
 	private Label buildStart, buildEnd;
 
 	@FXML
-	private Label routeStart, routeEnd, routeLength, routeDifficulty, routeDanger;
+	private Label routeStart, routeEnd, routeLength;
+	@FXML
+	private TextField routeDifficulty, routeDanger;
 
 	ContextMenu activeMenu = new ContextMenu();
 	Route activeRoute = new Route();
@@ -132,12 +135,24 @@ public class Controller {
 		Route route = new Route(startRoute, endRoute, (Math.sqrt(w * w + h * h)));
 		Line line = new Line(startRoute.getMapX(), startRoute.getMapY(), endRoute.getMapX(), endRoute.getMapY());
 		line.setOnMousePressed(e -> displayRoute(route));
+		line.setOnContextMenuRequested(e -> routeMenu(route));
 		line.setStrokeWidth(2);
 		mapAnchor.getChildren().add(line);
 		buildStart.setText("(Empty)");
 		buildEnd.setText("(Empty)");
 		activeRoute.setStart(null);
 		activeRoute.setEnd(null);
+	}
+	
+	private void routeMenu(Route route)
+	{
+		if (activeMenu.isShowing()) {
+			activeMenu.hide();
+		}
+		activeMenu = new ContextMenu();
+
+		MenuItem item1 = new MenuItem("Remove Route");
+		item1.setOnAction(e -> route.deleteRoute());	
 	}
 
 	private Object displayRoute(Route route) {

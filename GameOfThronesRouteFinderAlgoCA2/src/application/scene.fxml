@@ -9,6 +9,7 @@
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -128,8 +129,8 @@
                               <Label fx:id="routeStart" text="(Empty)" GridPane.columnIndex="1" />
                               <Label fx:id="routeEnd" text="(Empty)" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                               <Label fx:id="routeLength" text="(Empty)" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                              <Label fx:id="routeDifficulty" text="(Empty)" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                              <Label fx:id="routeDanger" text="(Empty)" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                              <TextField fx:id="routeDifficulty" styleClass="mapName" stylesheets="@application.css" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <TextField fx:id="routeDanger" styleClass="mapName" stylesheets="@application.css" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                            </children>
                         </GridPane>
                      </children>
