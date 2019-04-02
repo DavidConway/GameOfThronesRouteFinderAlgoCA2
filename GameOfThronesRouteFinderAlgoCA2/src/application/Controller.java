@@ -85,8 +85,8 @@ public class Controller {
 
 		MenuItem item1 = new MenuItem("Begin Journey");
 		item1.setOnAction(e -> setStart(waypoint));
-		MenuItem item2 = new MenuItem("Set as destination");
-		item1.setOnAction(e -> setEnd(waypoint));
+		MenuItem item2 = new MenuItem("Set Destination");
+		item2.setOnAction(e -> setEnd(waypoint));
 		MenuItem item3 = new MenuItem("Set Route Beginning");
 		item3.setOnAction(e -> beginConnection(waypoint));
 		MenuItem item4 = new MenuItem("Set Route End");
@@ -96,6 +96,21 @@ public class Controller {
 		MenuItem item6 = new MenuItem("Remove Waypoint");
 		item6.setOnAction(e -> remove(waypoint));
 		activeMenu.getItems().addAll(item1, item2, item3, item4, item5, item6);
+		return activeMenu;
+	}
+	public ContextMenu journeyMenu(Waypoint waypoint)
+	{
+		if (activeMenu.isShowing()) {
+			activeMenu.hide();
+		}
+		activeMenu = new ContextMenu();
+		MenuItem item1 = new MenuItem("Shortest");
+		item1.setOnAction(e -> activeJourney.shortestDistance(waypoint));
+		MenuItem item2 = new MenuItem("Safest");
+		item1.setOnAction(e -> activeJourney.leastDangerous(waypoint));
+		MenuItem item3 = new MenuItem("Easiest");
+		item1.setOnAction(e -> activeJourney.leastDifficult(waypoint));
+		activeMenu.getItems().addAll(item1, item2, item3);
 		return activeMenu;
 	}
 
@@ -169,15 +184,7 @@ public class Controller {
 
 	private void setEnd(Waypoint waypoint) {
 		journeyEnd.setText(waypoint.getName().getText());
-		MenuItem item1 = new MenuItem("Shortest");
-		item1.setOnAction(e -> activeJourney.shortestDistance(waypoint));
-		MenuItem item2 = new MenuItem("Safest");
-		item1.setOnAction(e -> activeJourney.leastDangerous(waypoint));
-		MenuItem item3 = new MenuItem("Easiest");
-		item1.setOnAction(e -> activeJourney.leastDifficult(waypoint));
-		activeMenu.getItems().clear();
-		activeMenu.getItems().addAll(item1, item2, item3);
-		
+		journeyMenu(waypoint).show(waypoint.getIView(), Side.BOTTOM, 0, 0);
 	}
 
 	private void setStart(Waypoint waypoint) {
