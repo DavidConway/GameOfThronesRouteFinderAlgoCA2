@@ -25,7 +25,7 @@ public class Controller {
 	private TextField routeDifficulty, routeDanger;
 
 	ContextMenu activeMenu = new ContextMenu();
-	Journey activeJourney = new Journey();
+	JJourney activeJourney;
 	Waypoint beginning, destination;
 	Route activeRoute = new Route();
 	Waypoint startRoute,endRoute;
@@ -83,7 +83,7 @@ public class Controller {
 		}
 		activeMenu = new ContextMenu();
 
-		MenuItem item1 = new MenuItem("Set as starting positon");
+		MenuItem item1 = new MenuItem("Begin Journey");
 		item1.setOnAction(e -> setStart(waypoint));
 		MenuItem item2 = new MenuItem("Set as destination");
 		item1.setOnAction(e -> setEnd(waypoint));
@@ -149,7 +149,9 @@ public class Controller {
 		activeMenu = new ContextMenu();
 
 		MenuItem item1 = new MenuItem("Remove Route");
-		item1.setOnAction(e -> route.deleteRoute());	
+		item1.setOnAction(e -> route.deleteRoute());
+		activeMenu.getItems().clear();
+		activeMenu.getItems().addAll(item1);
 	}
 
 	private void displayRoute(Route route) {
@@ -167,10 +169,20 @@ public class Controller {
 
 	private void setEnd(Waypoint waypoint) {
 		journeyEnd.setText(waypoint.getName().getText());
+		MenuItem item1 = new MenuItem("Shortest");
+		item1.setOnAction(e -> activeJourney.shortestDistance(waypoint));
+		MenuItem item2 = new MenuItem("Safest");
+		item1.setOnAction(e -> activeJourney.leastDangerous(waypoint));
+		MenuItem item3 = new MenuItem("Easiest");
+		item1.setOnAction(e -> activeJourney.leastDifficult(waypoint));
+		activeMenu.getItems().clear();
+		activeMenu.getItems().addAll(item1, item2, item3);
+		
 	}
 
 	private void setStart(Waypoint waypoint) {
 		journeyStart.setText(waypoint.getName().getText());
+		activeJourney = new JJourney(waypoint);
 	}
 
 }
