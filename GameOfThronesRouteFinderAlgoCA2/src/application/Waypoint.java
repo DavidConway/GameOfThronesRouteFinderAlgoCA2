@@ -20,7 +20,7 @@ public class Waypoint {
 		iView.setFitWidth(20);
 		iView.setPreserveRatio(true);
 		iView.setX(x - 12);
-		iView.setY(y - 16);
+		iView.setY(y - 15);
 		nameField = new TextField("");
 		nameField.getStyleClass().add("mapName");
 		nameField.setLayoutY(y + 10);
