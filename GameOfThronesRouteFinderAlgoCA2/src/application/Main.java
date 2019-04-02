@@ -25,6 +25,7 @@ public class Main extends Application {
 	public static void main(String[] args) {
 		launch(args);
 		/*Waypoint one = new Waypoint(1,2);
+		Waypoint one = new Waypoint(1,1);
 		Waypoint two = new Waypoint(2,2);
 		Waypoint three = new Waypoint (2,3);
 		Waypoint four = new Waypoint(2,1);
