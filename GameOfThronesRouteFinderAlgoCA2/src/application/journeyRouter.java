@@ -9,7 +9,7 @@ public class journeyRouter {
 	static Waypoint[] avoidWaypoints = null;
 	static Waypoint[] goToWaypoints = null;
 	static int showMode = 0;
-	private static Journey currentJourney;
+	static Journey currentJourney;
 
 	public static ArrayList<Journey> router(Waypoint start, Waypoint end, Waypoint[] goTo, Waypoint[] avoid, int show) {
 		avoidWaypoints = avoid;
@@ -37,11 +37,13 @@ public class journeyRouter {
 		showMode = show;
 		startPoint.getWaypoints().add(start);
 		possibleRoutes.add(startPoint);
-		while (finalRouths.size() != 1) {
+		while (finalRouths.size() != 3) {
 			currentJourney = extendPoint();
-			if (currentJourney.getWaypoints().getLast() == end) {
+			Waypoint test = currentJourney.getWaypoints().getLast();
+			if (test == end) {
 				finalRouths.add(currentJourney);
 				possibleRoutes.remove(currentJourney);
+				currentJourney = extendPoint();
 			}
 			currentJourney.extenOut();
 		}

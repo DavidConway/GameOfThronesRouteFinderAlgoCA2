@@ -18,7 +18,7 @@ public class Journey {
 			Waypoint extendOut = newRoute.getOpposite(endPoint);// gets the next waypoint
 			Journey newJourney = new Journey(); // sets up for the new journey
 
-			newJourney.setWaypoints(this.getWaypoints());// Copys the waypoints to the new journey
+			newJourney.addPreviousWaypoints();// Copys the waypoints to the new journey
 			if (newJourney.checkNotDoubleBack(extendOut) && checkNotAvoid(extendOut)) {
 				newJourney.getWaypoints().addLast(extendOut);// adds the next waypoint
 				newJourney.lenght = this.lenght + newRoute.length;// Fingers out the journey values
@@ -29,6 +29,13 @@ public class Journey {
 
 		}
 		journeyRouter.possibleRoutes.remove(this);// removes the current journey sins it has been extended
+	}
+
+	private void addPreviousWaypoints() {
+		for(Waypoint adding: journeyRouter.currentJourney.waypoints) {
+			waypoints.addLast(adding);
+		}
+		
 	}
 
 	private boolean checkNotAvoid(Waypoint check) {

@@ -71,7 +71,7 @@ public class Route {
 		if (in == start) {
 			return end;
 		} else {
-			return end;
+			return start;
 		}
 	}
 
