@@ -79,8 +79,8 @@ public class JJourney {
 		ArrayList<Waypoint> routes = new ArrayList<>();
 		routes.add(waypoint);
 		while (waypoint.getLengthPrevious() != null) {
-			routes.add(waypoint.getLengthPrevious());
-			waypoint = waypoint.getLengthPrevious();
+			routes.add(waypoint.getDangerPrevious());
+			waypoint = waypoint.getDangerPrevious();
 		}
 		return routes;
 	}
@@ -89,10 +89,9 @@ public class JJourney {
 		ArrayList<Waypoint> routes = new ArrayList<>();
 		routes.add(waypoint);
 		while (waypoint.getLengthPrevious() != null) {
-			routes.add(waypoint.getLengthPrevious());
-			waypoint = waypoint.getLengthPrevious();
+			routes.add(waypoint.getDifficultyPrevious());
+			waypoint = waypoint.getDifficultyPrevious();
 		}
 		return routes;
 	}
-
 }
