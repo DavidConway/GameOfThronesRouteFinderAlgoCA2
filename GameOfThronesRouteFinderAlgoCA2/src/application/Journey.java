@@ -11,7 +11,7 @@ public class Journey {
 	public Journey() {
 	}
 
-	public void extenOut() {
+	public void extenOut() {// creats a new journeys that imclude the new waypoint at the end of each rode
 		Waypoint endPoint = waypoints.getLast(); // gets the end point of the current journey
 		for (Integer routeIndex : endPoint.getConnectedRoughts()) {
 			Route newRoute = Route.allRouts.get(routeIndex); // gets the route that will be used
