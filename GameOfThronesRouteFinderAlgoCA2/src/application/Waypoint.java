@@ -8,9 +8,12 @@ import javafx.scene.image.ImageView;
 public class Waypoint {
 	public static ArrayList<Waypoint> allWaypoints = new ArrayList<>();
 	private ArrayList<Integer> connectedRoutesIndexes = new ArrayList<>();
-	private double mapX, mapY;
+	private ArrayList<Route> connectedRoutes = new ArrayList<>();
+	private double mapX, mapY, length;
+	private int difficulty, danger;
 	private TextField nameField;
 	private ImageView iView;
+	private Waypoint lengthPrevious, difficultyPrevious, dangerPrevious;
 
 	Waypoint(double x, double y) {
 		mapX = x;
@@ -28,9 +31,14 @@ public class Waypoint {
 		allWaypoints.add(this);
 	}
 
+	public Waypoint() {
+		allWaypoints.add(this);
+	}
+
 	public void addRoute(Route newRoute) {
 		int newRoughtID = Route.allRouts.indexOf(newRoute);
 		connectedRoutesIndexes.add(newRoughtID);
+		connectedRoutes.add(newRoute);
 	}
 
 	public void removeRoute(Route oldRoute) {
@@ -64,6 +72,62 @@ public class Waypoint {
 
 	public TextField getName() {
 		return nameField;
+	}
+
+	public ArrayList<Route> getConnectedRoutes() {
+		return connectedRoutes;
+	}
+
+	public void setConnectedRoutes(ArrayList<Route> connectedRoutes) {
+		this.connectedRoutes = connectedRoutes;
+	}
+
+	public double getLength() {
+		return length;
+	}
+
+	public void setLength(double length) {
+		this.length = length;
+	}
+
+	public int getDifficulty() {
+		return difficulty;
+	}
+
+	public void setDifficulty(int difficulty) {
+		this.difficulty = difficulty;
+	}
+
+	public int getDanger() {
+		return danger;
+	}
+
+	public void setDanger(int danger) {
+		this.danger = danger;
+	}
+
+	public Waypoint getLengthPrevious() {
+		return lengthPrevious;
+	}
+
+	public void setLengthPrevious(Waypoint lengthPrevious) {
+		this.lengthPrevious = lengthPrevious;
+	}
+
+	public Waypoint getDifficultyPrevious() {
+		return difficultyPrevious;
+	}
+
+	public void setDifficultyPrevious(Waypoint difficultyPrevious) {
+		this.difficultyPrevious = difficultyPrevious;
+	}
+
+	public Waypoint getDangerPrevious() {
+		return dangerPrevious;
+	}
+
+	public void setDangerPrevious(Waypoint dangerPrevious) {
+		this.dangerPrevious = dangerPrevious;
 	}
 
 }
