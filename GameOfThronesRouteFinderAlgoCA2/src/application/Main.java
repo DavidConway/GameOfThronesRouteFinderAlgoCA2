@@ -29,7 +29,7 @@ public class Main extends Application {
 		Waypoint three = new Waypoint (3,3);
 		Route oneTwo = new Route(one,two,1.0);
 		Route twoThree = new Route(two,three,1.0);
-		for(Journey j: journeyRouter.router(one, two, 0)) {
+		for(Journey j: journeyRouter.router(one, three, 0)) {
 			System.out.println(j.toString());
 		}
 		System.out.println("BattlePass is shit");

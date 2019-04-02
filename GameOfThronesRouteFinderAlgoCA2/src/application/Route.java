@@ -24,6 +24,10 @@ public class Route {
 		this.start = start;
 		this.end = end;
 		this.length = length;
+		
+		allRouts.add(this);
+		start.addRoute(this);
+		end.addRoute(this);
 
 	}
 

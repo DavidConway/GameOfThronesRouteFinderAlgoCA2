@@ -18,14 +18,15 @@ public class journeyRouter {
 		startPoint.getWaypoints().add(start);
 		possibleRoutes.add(startPoint);
 		while (finalRouths.size() != 3) {
-			currentJourney = extendPoint();
-			currentJourney.extenOut();
-			if (currentJourney.getWaypoints().getLast() == end) {
-				if (currentJourney.goseToAllPoints()) {
+			currentJourney = extendPoint();// gets the shortest route
+			if (currentJourney.getWaypoints().getLast() == end) { // sees if that route has made it to destination
+				if (currentJourney.goseToAllPoints()) {// makes sur that the journey passes trow all needed waypoints
 					finalRouths.add(currentJourney);
 				}
-				possibleRoutes.remove(currentJourney);
+				possibleRoutes.remove(currentJourney);//removes journey from possible rotes so it dose not get added twice
 			}
+			currentJourney.extenOut();
+			
 		}
 		return finalRouths;
 
@@ -38,11 +39,11 @@ public class journeyRouter {
 		possibleRoutes.add(startPoint);
 		while (finalRouths.size() != 1) {
 			currentJourney = extendPoint();
-			currentJourney.extenOut();
 			if (currentJourney.getWaypoints().getLast() == end) {
 				finalRouths.add(currentJourney);
 				possibleRoutes.remove(currentJourney);
 			}
+			currentJourney.extenOut();
 		}
 		return finalRouths;
 
@@ -86,7 +87,7 @@ public class journeyRouter {
 				if(reternJourney == null) {
 					reternJourney = check;
 				}
-				else if (check.getLenght() < reternJourney.getLenght() || reternJourney == null) {
+				if (check.getLenght() < reternJourney.getLenght() || reternJourney == null) {
 					reternJourney = check;
 				}
 			}

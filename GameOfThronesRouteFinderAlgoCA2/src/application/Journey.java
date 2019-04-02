@@ -3,7 +3,7 @@ package application;
 import java.util.LinkedList;
 
 public class Journey {
-	static LinkedList<Waypoint> waypoints = new LinkedList<Waypoint>();
+	public LinkedList<Waypoint> waypoints = new LinkedList<Waypoint>();
 	double lenght = 0;
 	int danger = 0;
 	int difficlty = 0;
@@ -68,7 +68,7 @@ public class Journey {
 	}
 
 	public void setWaypoints(LinkedList<Waypoint> waypoints) {
-		Journey.waypoints = waypoints;
+		this.waypoints = waypoints;
 	}
 
 	public double getLenght() {
