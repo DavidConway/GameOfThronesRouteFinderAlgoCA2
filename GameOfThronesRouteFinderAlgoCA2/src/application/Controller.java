@@ -50,9 +50,7 @@ public class Controller {
 		item0.setOnAction(e -> addNode(x, y));
 		activeMenu.getItems().clear();
 		activeMenu.getItems().addAll(item0);
-
 		return activeMenu;
-
 	}
 
 	private void addNode(double x, double y) {
@@ -65,7 +63,7 @@ public class Controller {
 	private Waypoint createNode(double x, double y) {
 		Waypoint waypoint = new Waypoint(x, y);
 		ImageView iView = waypoint.getIView();
-		iView.setOnMouseClicked(e -> newMenu(waypoint).show(iView, Side.BOTTOM, 0, 0));
+		iView.setOnMouseClicked(e -> nodeMenu(waypoint).show(iView, Side.BOTTOM, 0, 0));
 		return waypoint;
 	}
 	
@@ -78,7 +76,7 @@ public class Controller {
 		}
 	}
 
-	public ContextMenu newMenu(Waypoint waypoint) {
+	public ContextMenu nodeMenu(Waypoint waypoint) {
 		if (activeMenu.isShowing()) {
 			activeMenu.hide();
 		}
@@ -134,6 +132,7 @@ public class Controller {
 		Route route = new Route(startRoute, endRoute, (Math.sqrt(w * w + h * h)));
 		Line line = new Line(startRoute.getMapX(), startRoute.getMapY(), endRoute.getMapX(), endRoute.getMapY());
 		line.setOnMousePressed(e -> displayRoute(route));
+		line.setStrokeWidth(2);
 		mapAnchor.getChildren().add(line);
 		buildStart.setText("(Empty)");
 		buildEnd.setText("(Empty)");
