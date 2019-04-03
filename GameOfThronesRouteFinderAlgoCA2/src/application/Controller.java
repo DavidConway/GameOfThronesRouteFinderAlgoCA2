@@ -23,6 +23,13 @@ public class Controller {
 	private Label routeStart, routeEnd, routeLength;
 	@FXML
 	private TextField routeDifficulty, routeDanger;
+	@FXML
+	private Label SDEase, SDDanger, SDDistance;
+	@FXML
+	private Label LDDistance, LDDanger, LDEase;
+	@FXML
+	private Label MEDistance, MEDanger, MEEase;
+
 
 	ContextMenu activeMenu = new ContextMenu();
 	JJourney activeJourney;
@@ -173,7 +180,9 @@ public class Controller {
 		routeStart.setText(route.getStart().getName().getText());
 		routeEnd.setText(route.getEnd().getName().getText());
 		routeDanger.setText(route.getDanger() + "");
+		routeDanger.setOnAction(e-> route.setDanger(Integer.parseInt(routeDanger.getText())));
 		routeDifficulty.setText(route.getDifficulty() + "");
+		routeDifficulty.setOnAction(e-> route.setDifficulty(Integer.parseInt(routeDifficulty.getText())));
 		routeLength.setText(route.getLength() + "");
 	}
 
@@ -184,7 +193,16 @@ public class Controller {
 
 	private void setEnd(Waypoint waypoint) {
 		journeyEnd.setText(waypoint.getName().getText());
-		journeyMenu(waypoint).show(waypoint.getIView(), Side.BOTTOM, 0, 0);
+		//journeyMenu(waypoint).show(waypoint.getIView(), Side.BOTTOM, 0, 0);
+		SDEase.setText(activeJourney.shortestDistance(waypoint).get(0).getDifficulty()+"");
+		SDDanger.setText(activeJourney.shortestDistance(waypoint).get(0).getDanger()+"");
+		SDDistance.setText(activeJourney.shortestDistance(waypoint).get(0).getLength()+"");
+		LDDistance.setText(activeJourney.leastDangerous(waypoint).get(0).getLength()+"");
+		LDDanger.setText(activeJourney.leastDangerous(waypoint).get(0).getDanger()+"");
+		LDEase.setText(activeJourney.leastDangerous(waypoint).get(0).getDifficulty()+"");
+		MEDistance.setText(activeJourney.leastDifficult(waypoint).get(0).getLength()+"");
+		MEDanger.setText(activeJourney.leastDifficult(waypoint).get(0).getDanger()+"");
+		MEEase.setText(activeJourney.leastDifficult(waypoint).get(0).getDifficulty()+"");
 	}
 
 	private void setStart(Waypoint waypoint) {

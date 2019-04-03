@@ -64,7 +64,7 @@ public class JJourney {
 		w2.setDifficulty(r.getDifficulty() + w2.getLengthPrevious().getDifficulty());
 
 	}
-
+	
 	public ArrayList<Waypoint> shortestDistance(Waypoint waypoint) {
 		ArrayList<Waypoint> routes = new ArrayList<>();
 		routes.add(waypoint);
