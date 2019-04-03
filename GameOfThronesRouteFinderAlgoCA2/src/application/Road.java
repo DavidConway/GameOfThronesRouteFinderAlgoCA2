@@ -2,13 +2,13 @@ package application;
 
 import java.util.ArrayList;
 
-public class Route {
-	static ArrayList<Route> allRouts = new ArrayList<>();
+public class Road {
+	static ArrayList<Road> allRouts = new ArrayList<>();
 	Waypoint start, end;
 	int danger = 0, difficulty = 0;
 	double length = 0;
 
-	Route(Waypoint start, Waypoint end, int danger, double length, int difficulty) {
+	Road(Waypoint start, Waypoint end, int danger, double length, int difficulty) {
 		this.start = start;
 		this.end = end;
 		this.danger = danger;
@@ -16,22 +16,22 @@ public class Route {
 		this.difficulty = difficulty;
 
 		allRouts.add(this);
-		start.addRoute(this);
-		end.addRoute(this);
+		start.addRoad(this);
+		end.addRoad(this);
 	}
 
-	Route(Waypoint start, Waypoint end, double length) {
+	Road(Waypoint start, Waypoint end, double length) {
 		this.start = start;
 		this.end = end;
 		this.length = length;
 		
 		allRouts.add(this);
-		start.addRoute(this);
-		end.addRoute(this);
+		start.addRoad(this);
+		end.addRoad(this);
 
 	}
 
-	public Route() {
+	public Road() {
 
 	}
 
@@ -51,12 +51,12 @@ public class Route {
 		this.end = end;
 	}
 
-	public void deleteRoute() {
-		Integer thisIndex = Route.allRouts.indexOf(this);
+	public void deleteRoad() {
+		Integer thisIndex = Road.allRouts.indexOf(this);
 		for (Waypoint check : Waypoint.allWaypoints) {
-			ArrayList<Integer> checksRoute = check.getConnectedRoughts();
-			if (checksRoute.contains(thisIndex)) {
-				checksRoute.remove(thisIndex);
+			ArrayList<Integer> checksRoad = check.getConnectedRoughts();
+			if (checksRoad.contains(thisIndex)) {
+				checksRoad.remove(thisIndex);
 			}
 			for (Integer checkIndex : check.getConnectedRoughts()) {
 				if (checkIndex > thisIndex) {

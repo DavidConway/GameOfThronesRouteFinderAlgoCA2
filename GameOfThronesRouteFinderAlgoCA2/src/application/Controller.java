@@ -20,9 +20,9 @@ public class Controller {
 	@FXML
 	private Label buildStart, buildEnd;
 	@FXML
-	private Label routeStart, routeEnd, routeLength;
+	private Label roadStart, roadEnd, roadLength;
 	@FXML
-	private TextField routeDifficulty, routeDanger;
+	private TextField roadDifficulty, roadDanger;
 	@FXML
 	private Label SDEase, SDDanger, SDDistance;
 	@FXML
@@ -34,8 +34,8 @@ public class Controller {
 	ContextMenu activeMenu = new ContextMenu();
 	JJourney activeJourney;
 	Waypoint beginning, destination;
-	Route activeRoute = new Route();
-	Waypoint startRoute,endRoute;
+	Road activeRoad = new Road();
+	Waypoint startRoad,endRoad;
 
 	Image map = new Image("/images/map.png");
 	ImageView mapPane = new ImageView(map);
@@ -94,9 +94,9 @@ public class Controller {
 		item1.setOnAction(e -> setStart(waypoint));
 		MenuItem item2 = new MenuItem("Set Destination");
 		item2.setOnAction(e -> setEnd(waypoint));
-		MenuItem item3 = new MenuItem("Set Route Beginning");
+		MenuItem item3 = new MenuItem("Set Road Beginning");
 		item3.setOnAction(e -> beginConnection(waypoint));
-		MenuItem item4 = new MenuItem("Set Route End");
+		MenuItem item4 = new MenuItem("Set Road End");
 		item4.setOnAction(e -> endConnection(waypoint));
 		MenuItem item5 = new MenuItem("Edit Name");
 		item5.setOnAction(e -> setName(waypoint));
@@ -122,68 +122,68 @@ public class Controller {
 	}
 
 	private void endConnection(Waypoint waypoint) {
-		endRoute = waypoint;
-		activeRoute.setEnd(waypoint);
+		endRoad = waypoint;
+		activeRoad.setEnd(waypoint);
 		buildEnd.setText(waypoint.getName().getText());
 		if (checkConnection()) {
-			buildRoute();
+			buildRoad();
 		}
 	}
 
 	private boolean checkConnection() {
-		if (activeRoute.getStart() != null && activeRoute.getEnd() != null) {
+		if (activeRoad.getStart() != null && activeRoad.getEnd() != null) {
 			return true;
 		} else
 			return false;
 	}
 
 	private void beginConnection(Waypoint waypoint) {
-		startRoute = waypoint;
-		activeRoute.setStart(waypoint);
+		startRoad = waypoint;
+		activeRoad.setStart(waypoint);
 		buildStart.setText(waypoint.getName().getText());
 		if (checkConnection()) {
-			buildRoute();
+			buildRoad();
 		}
 	}
 
-	private void buildRoute() {
+	private void buildRoad() {
 		double w, h; // width, height
-		w = Math.abs(startRoute.getMapX() - endRoute.getMapX());
-		h = Math.abs(startRoute.getMapY() - endRoute.getMapY());
+		w = Math.abs(startRoad.getMapX() - endRoad.getMapX());
+		h = Math.abs(startRoad.getMapY() - endRoad.getMapY());
 
-		Route route = new Route(startRoute, endRoute, (Math.sqrt(w * w + h * h)));
-		Line line = new Line(startRoute.getMapX(), startRoute.getMapY(), endRoute.getMapX(), endRoute.getMapY());
-		line.setOnMousePressed(e -> displayRoute(route));
-		line.setOnContextMenuRequested(e -> routeMenu(route));
+		Road road = new Road(startRoad, endRoad, (Math.sqrt(w * w + h * h)));
+		Line line = new Line(startRoad.getMapX(), startRoad.getMapY(), endRoad.getMapX(), endRoad.getMapY());
+		line.setOnMousePressed(e -> displayRoad(road));
+		line.setOnContextMenuRequested(e -> roadMenu(road));
 		line.setStrokeWidth(2);
 		mapAnchor.getChildren().add(line);
 		buildStart.setText("(Empty)");
 		buildEnd.setText("(Empty)");
-		activeRoute.setStart(null);
-		activeRoute.setEnd(null);
+		activeRoad.setStart(null);
+		activeRoad.setEnd(null);
 	}
 	
-	private void routeMenu(Route route)
+	private void roadMenu(Road road)
 	{
 		if (activeMenu.isShowing()) {
 			activeMenu.hide();
 		}
 		activeMenu = new ContextMenu();
 
-		MenuItem item1 = new MenuItem("Remove Route");
-		item1.setOnAction(e -> route.deleteRoute());
+		MenuItem item1 = new MenuItem("Remove Road");
+		item1.setOnAction(e -> road.deleteRoad());
 		activeMenu.getItems().clear();
 		activeMenu.getItems().addAll(item1);
 	}
 
-	private void displayRoute(Route route) {
-		routeStart.setText(route.getStart().getName().getText());
-		routeEnd.setText(route.getEnd().getName().getText());
-		routeDanger.setText(route.getDanger() + "");
-		routeDanger.setOnAction(e-> route.setDanger(Integer.parseInt(routeDanger.getText())));
-		routeDifficulty.setText(route.getDifficulty() + "");
-		routeDifficulty.setOnAction(e-> route.setDifficulty(Integer.parseInt(routeDifficulty.getText())));
-		routeLength.setText(route.getLength() + "");
+	private void displayRoad(Road road) {
+		roadStart.setText(road.getStart().getName().getText());
+		roadEnd.setText(road.getEnd().getName().getText());
+		roadDanger.setText(road.getDanger() + "");
+		roadDanger.setOnAction(e-> road.setDanger(Integer.parseInt(roadDanger.getText())));
+		roadDifficulty.setText(road.getDifficulty() + "");
+		roadDifficulty.setOnAction(e-> road.setDifficulty(Integer.parseInt(roadDifficulty.getText())));
+		roadLength.setText(road.getLength() + "");
 	}
 
 	private void remove(Waypoint waypoint) {

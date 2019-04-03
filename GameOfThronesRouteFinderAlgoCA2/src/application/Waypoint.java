@@ -7,8 +7,8 @@ import javafx.scene.image.ImageView;
 
 public class Waypoint {
 	public static ArrayList<Waypoint> allWaypoints = new ArrayList<>();
-	private ArrayList<Integer> connectedRoutesIndexes = new ArrayList<>();
-	private ArrayList<Route> connectedRoutes = new ArrayList<>();
+	private ArrayList<Integer> connectedRoadsIndexes = new ArrayList<>();
+	private ArrayList<Road> connectedRoads = new ArrayList<>();
 	private double mapX, mapY, length;
 	private int difficulty, danger;
 	private TextField nameField;
@@ -35,19 +35,19 @@ public class Waypoint {
 		allWaypoints.add(this);
 	}
 
-	public void addRoute(Route newRoute) {
-		int newRoughtID = Route.allRouts.indexOf(newRoute);
-		connectedRoutesIndexes.add(newRoughtID);
-		connectedRoutes.add(newRoute);
+	public void addRoad(Road newRoad) {
+		int newRoadID = Road.allRouts.indexOf(newRoad);
+		connectedRoadsIndexes.add(newRoadID);
+		connectedRoads.add(newRoad);
 	}
 
-	public void removeRoute(Route oldRoute) {
-		Integer removeInt = Route.allRouts.indexOf(oldRoute);
-		connectedRoutesIndexes.remove(removeInt);
+	public void removeRoad(Road oldRoad) {
+		Integer removeInt = Road.allRouts.indexOf(oldRoad);
+		connectedRoadsIndexes.remove(removeInt);
 	}
 
 	public ArrayList<Integer> getConnectedRoughts() {
-		return this.connectedRoutesIndexes;
+		return this.connectedRoadsIndexes;
 	}
 
 	public double getMapX() {
@@ -59,9 +59,9 @@ public class Waypoint {
 	}
 
 	public void deleteWaypoint() {
-		while (this.connectedRoutesIndexes != null) {
-			Route removeRoute = Route.allRouts.get(0);
-			removeRoute.deleteRoute();
+		while (this.connectedRoadsIndexes != null) {
+			Road removeRoad = Road.allRouts.get(0);
+			removeRoad.deleteRoad();
 		}
 		allWaypoints.remove(this);
 	}
@@ -74,12 +74,12 @@ public class Waypoint {
 		return nameField;
 	}
 
-	public ArrayList<Route> getConnectedRoutes() {
-		return connectedRoutes;
+	public ArrayList<Road> getConnectedRoads() {
+		return connectedRoads;
 	}
 
-	public void setConnectedRoutes(ArrayList<Route> connectedRoutes) {
-		this.connectedRoutes = connectedRoutes;
+	public void setConnectedRoads(ArrayList<Road> connectedRoads) {
+		this.connectedRoads = connectedRoads;
 	}
 
 	public double getLength() {

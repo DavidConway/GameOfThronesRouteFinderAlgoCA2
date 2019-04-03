@@ -15,7 +15,7 @@ public class JJourney {
 		queue.add(beginning);
 		for (int i = 0; i < Waypoint.allWaypoints.size(); i++) {
 			for (Waypoint w : queue) {
-				for (Route r : w.getConnectedRoutes()) {
+				for (Road r : w.getConnectedRoads()) {
 					if (visited.contains(r.getOpposite(w))) {
 						Waypoint waypoint = r.getOpposite(w);
 
@@ -48,50 +48,50 @@ public class JJourney {
 		}
 	}
 
-	private void assignLength(Waypoint w, Route r, Waypoint w2) {
+	private void assignLength(Waypoint w, Road r, Waypoint w2) {
 		w2.setLengthPrevious(w);
 		w2.setLength(w.getLength() + r.getLength());
 	}
 
-	private void assignDanger(Waypoint w, Route r, Waypoint w2) {
+	private void assignDanger(Waypoint w, Road r, Waypoint w2) {
 
 		w2.setDangerPrevious(w);
 		w2.setDanger(r.getDanger() + w2.getDangerPrevious().getDanger());
 	}
 
-	private void assignDifficulty(Waypoint w, Route r, Waypoint w2) {
+	private void assignDifficulty(Waypoint w, Road r, Waypoint w2) {
 		w2.setDifficultyPrevious(w);
 		w2.setDifficulty(r.getDifficulty() + w2.getLengthPrevious().getDifficulty());
 
 	}
 	
 	public ArrayList<Waypoint> shortestDistance(Waypoint waypoint) {
-		ArrayList<Waypoint> routes = new ArrayList<>();
-		routes.add(waypoint);
+		ArrayList<Waypoint> roads = new ArrayList<>();
+		roads.add(waypoint);
 		while (waypoint.getLengthPrevious() != null) {
-			routes.add(waypoint.getLengthPrevious());
+			roads.add(waypoint.getLengthPrevious());
 			waypoint = waypoint.getLengthPrevious();
 		}
-		return routes;
+		return roads;
 	}
 
 	public ArrayList<Waypoint> leastDangerous(Waypoint waypoint) {
-		ArrayList<Waypoint> routes = new ArrayList<>();
-		routes.add(waypoint);
+		ArrayList<Waypoint> roads = new ArrayList<>();
+		roads.add(waypoint);
 		while (waypoint.getLengthPrevious() != null) {
-			routes.add(waypoint.getDangerPrevious());
+			roads.add(waypoint.getDangerPrevious());
 			waypoint = waypoint.getDangerPrevious();
 		}
-		return routes;
+		return roads;
 	}
 
 	public ArrayList<Waypoint> leastDifficult(Waypoint waypoint) {
-		ArrayList<Waypoint> routes = new ArrayList<>();
-		routes.add(waypoint);
+		ArrayList<Waypoint> roads = new ArrayList<>();
+		roads.add(waypoint);
 		while (waypoint.getLengthPrevious() != null) {
-			routes.add(waypoint.getDifficultyPrevious());
+			roads.add(waypoint.getDifficultyPrevious());
 			waypoint = waypoint.getDifficultyPrevious();
 		}
-		return routes;
+		return roads;
 	}
 }

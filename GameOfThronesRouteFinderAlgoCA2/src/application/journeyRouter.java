@@ -18,8 +18,8 @@ public class journeyRouter {
 		startPoint.getWaypoints().add(start);
 		possibleRoutes.add(startPoint);
 		while (finalRouths.size() != 3) {
-			currentJourney = extendPoint();// gets the shortest route
-			if (currentJourney.getWaypoints().getLast() == end) { // sees if that route has made it to destination
+			currentJourney = extendPoint();// gets the shortest journey
+			if (currentJourney.getWaypoints().getLast() == end) { // sees if that journey has made it to destination
 				if (currentJourney.goseToAllPoints()) {// makes sur that the journey passes trow all needed waypoints
 					finalRouths.add(currentJourney);
 				}
