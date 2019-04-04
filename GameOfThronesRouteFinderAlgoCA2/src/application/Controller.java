@@ -1,7 +1,11 @@
 package application;
 
+import java.util.ArrayList;
+
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Side;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
@@ -13,6 +17,8 @@ import javafx.scene.shape.Line;
 import javafx.stage.Screen;
 
 public class Controller {
+	
+	
 	@FXML
 	AnchorPane mapAnchor;
 	@FXML
@@ -29,6 +35,10 @@ public class Controller {
 	private Label LDDistance, LDDanger, LDEase;
 	@FXML
 	private Label MEDistance, MEDanger, MEEase;
+	
+	//
+	@FXML
+	private ChoiceBox<String> findMode;
 
 
 	ContextMenu activeMenu = new ContextMenu();
@@ -36,6 +46,8 @@ public class Controller {
 	Waypoint beginning, destination;
 	Road activeRoad = new Road();
 	Waypoint startRoad,endRoad;
+	
+	ArrayList<Line> routhLines = new ArrayList<Line>();
 
 	Image map = new Image("/images/map.png");
 	ImageView mapPane = new ImageView(map);
@@ -47,6 +59,9 @@ public class Controller {
 		mapPane.setFitWidth(Screen.getPrimary().getVisualBounds().getWidth());
 		mapAnchor.setMinWidth(mapPane.getFitWidth());
 		mapPane.setOnMouseClicked(e -> baseMenu(e.getX(), e.getY()).show(mapAnchor, null, e.getX(), e.getY()));
+		
+		//choicebox stuf//
+		findMode.getItems().addAll("lenth","danger","dificulty");
 	}
 
 	public ContextMenu baseMenu(double x, double y) {
@@ -192,6 +207,8 @@ public class Controller {
 	}
 
 	private void setEnd(Waypoint waypoint) {
+		destination = waypoint;
+		System.out.println(""+destination.getMapX()+""+destination.getMapY());
 		journeyEnd.setText(waypoint.getName().getText());
 		//journeyMenu(waypoint).show(waypoint.getIView(), Side.BOTTOM, 0, 0);
 		SDEase.setText(activeJourney.shortestDistance(waypoint).get(0).getDifficulty()+"");
@@ -206,8 +223,47 @@ public class Controller {
 	}
 
 	private void setStart(Waypoint waypoint) {
+		beginning = waypoint;
+		System.out.println(""+beginning.getMapX()+""+beginning.getMapY());
 		journeyStart.setText(waypoint.getName().getText());
 		activeJourney = new JJourney(waypoint);
+	}
+	
+	@FXML
+	private void generate(ActionEvent event) {
+		System.out.println("ding");
+		int mode = 0;
+		if(findMode.getValue().toString() == "lenth" ) {
+			mode = 0;
+		}
+		else if(findMode.getValue().toString() == "danger") {
+			mode = 1;
+		}
+		else if(findMode.getValue().toString() == "dificulty") {
+			mode = 2;
+		}
+		
+		if(beginning != null && destination !=null) {
+			for(Journey current: journeyRouter.router(beginning, destination, mode)) {
+				Waypoint start = null;
+				Waypoint end = null;
+				for(Waypoint currentPoint: current.getWaypoints()) {
+					if(end == null) {//STOPS THINGS FROM BRAKING
+						end = currentPoint;
+						start = currentPoint;
+					}
+					else{
+						end = start;
+						start = currentPoint;
+					}
+					
+					//TO DO USE START AND END POINTS TO CREATE COLORED LINES//
+					
+					//
+					
+				}
+			}
+		}
 	}
 
 }
