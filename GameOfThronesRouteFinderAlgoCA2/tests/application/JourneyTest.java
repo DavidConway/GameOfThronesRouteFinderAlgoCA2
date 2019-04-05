@@ -15,17 +15,17 @@ class JourneyTest {
 	Waypoint w3 = new Waypoint();
 	Waypoint w4 = new Waypoint();
 	Waypoint w5 = new Waypoint();
-	Route r1 = new Route(w1,w2,5.0);
-	Route r6 = new Route(w1,w4,3.0);
-	Route r3 = new Route(w1,w3,1.0);
+	Road r1 = new Road(w1,w2,5.0, null);
+	Road r6 = new Road(w1,w4,3.0, null);
+	Road r3 = new Road(w1,w3,1.0, null);
 	
-	Route r2 = new Route(w2,w5,3.0);
+	Road r2 = new Road(w2,w5,3.0, null);
 	
 	
-	Route r4 = new Route(w3,w5,1.0);
-	Route r5 = new Route(w3,w2,1.0);
+	Road r4 = new Road(w3,w5,1.0, null);
+	Road r5 = new Road(w3,w2,1.0, null);
 	
-	Route r7 = new Route(w4,w5,3.0);
+	Road r7 = new Road(w4,w5,3.0, null);
 	
 
 	@BeforeAll
