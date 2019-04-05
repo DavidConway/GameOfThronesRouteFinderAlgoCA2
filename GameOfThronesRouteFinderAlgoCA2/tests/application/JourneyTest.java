@@ -55,7 +55,7 @@ class JourneyTest {
 		JJourney journey = new JJourney(w1);
 
 		
-		assertEquals(w2.getLength(), 2);
+		assertEquals(w2.getLength(0), 2);
 	}
 	
 

@@ -186,9 +186,11 @@ public class Controller {
 		line.setStrokeLineCap(StrokeLineCap.ROUND);
 		line.setStrokeType(StrokeType.OUTSIDE);
 		line.setStroke(Color.BEIGE.darker().darker());
-		Road road = new Road(startRoad, endRoad, (Math.sqrt(w * w + h * h)), line);
+		
 		line.setStrokeWidth(3);
 		line.getStrokeDashArray().addAll(25d, 15d);
+		
+		Road road = new Road(startRoad, endRoad, (Math.sqrt(w * w + h * h)), line);
 		
 		line.setOnMousePressed(e -> displayRoad(road));
 		line.setOnContextMenuRequested(e -> roadMenu(road));
@@ -238,15 +240,19 @@ public class Controller {
 		destination = waypoint;
 		System.out.println(""+destination.getMapX()+""+destination.getMapY());
 		journeyEnd.setText(waypoint.getName().getText());
-		SDEase.setText(activeJourney.shortestDistance(waypoint).get(0).getDifficulty(0)+"");
-		SDDanger.setText(activeJourney.shortestDistance(waypoint).get(0).getDanger(0)+"");
-		SDDistance.setText(activeJourney.shortestDistance(waypoint).get(0).getLength(0)+"");
-		LDDistance.setText(activeJourney.leastDangerous(waypoint).get(0).getLength(1)+"");
-		LDDanger.setText(activeJourney.leastDangerous(waypoint).get(0).getDanger(1)+"");
-		LDEase.setText(activeJourney.leastDangerous(waypoint).get(0).getDifficulty(1)+"");
-		MEDistance.setText(activeJourney.leastDifficult(waypoint).get(0).getLength(2)+"");
-		MEDanger.setText(activeJourney.leastDifficult(waypoint).get(0).getDanger(2)+"");
-		MEEase.setText(activeJourney.leastDifficult(waypoint).get(0).getDifficulty(2)+"");
+		setJourneyInfo(waypoint);
+	}
+
+	private void setJourneyInfo(Waypoint waypoint) {
+		SDEase.setText(waypoint.getDifficulty(0)+"");
+		SDDanger.setText(waypoint.getDanger(0)+"");
+		SDDistance.setText(waypoint.getLength(0)+"");
+		LDDistance.setText(waypoint.getLength(1)+"");
+		LDDanger.setText(waypoint.getDanger(1)+"");
+		LDEase.setText(waypoint.getDifficulty(1)+"");
+		MEDistance.setText(waypoint.getLength(2)+"");
+		MEDanger.setText(waypoint.getDanger(2)+"");
+		MEEase.setText(waypoint.getDifficulty(2)+"");
 	}
 
 	private void setStart(Waypoint waypoint) {
@@ -292,5 +298,7 @@ public class Controller {
 			}
 		}
 	}
+	
+	
 
 }
