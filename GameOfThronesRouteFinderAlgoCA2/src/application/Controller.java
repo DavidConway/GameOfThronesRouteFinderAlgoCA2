@@ -6,8 +6,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Side;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -43,7 +45,7 @@ public class Controller {
 
 	//
 	@FXML
-	private ChoiceBox<MenuItem> findMode;
+	private MenuButton findMode;
 
 	ContextMenu activeMenu = new ContextMenu();
 	JJourney activeJourney;
@@ -66,6 +68,7 @@ public class Controller {
 		mapPane.setOnMouseClicked(e -> baseMenu(e.getX(), e.getY()).show(mapAnchor, null, e.getX(), e.getY()));
 
 		// choicebox stuf//
+		findMode.getItems().clear();
 		MenuItem item1 = new MenuItem("Length");
 		item1.setOnAction(e -> setChoice(0));
 		MenuItem item2 = new MenuItem("Danger");
@@ -311,11 +314,11 @@ public class Controller {
 	private void generate(ActionEvent event) {
 		System.out.println("ding");
 		int mode = 0;
-		if (findMode.getValue().toString() == "lenth") {
+		if (searchSetting==0) {
 			mode = 0;
-		} else if (findMode.getValue().toString() == "danger") {
+		} else if (searchSetting==1) {
 			mode = 1;
-		} else if (findMode.getValue().toString() == "dificulty") {
+		} else if (searchSetting==2) {
 			mode = 2;
 		}
 
