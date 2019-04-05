@@ -19,25 +19,24 @@ public class JJourney {
 					if (visited.contains(r.getOpposite(w))) {
 						Waypoint waypoint = r.getOpposite(w);
 
-						if (waypoint.getLength() > w.getLength() + r.getLength()) {
-							assignLength(w, r, waypoint);
+						if (waypoint.getLength(0) > w.getLength(0) + r.getLength()) {
+							assign(0, w, r, waypoint);
 						}
-						if (waypoint.getDanger() > w.getDanger() + r.getDanger()) {
-							assignDanger(w, r, waypoint);
+						if (waypoint.getDanger(1) > w.getDanger(1) + r.getDanger()) {
+							assign(1, w, r, waypoint);
 						}
-						if (waypoint.getDifficulty() > w.getDifficulty() + r.getDifficulty()) {
-							assignDifficulty(w, r, waypoint);
+						if (waypoint.getDifficulty(2) > w.getDifficulty(2) + r.getDifficulty()) {
+							assign(2, w, r, waypoint);
 						}
-
 						continue;
 					}
 					if (queue.contains(r.getOpposite(w))) {
 						continue;
 					}
 					Waypoint waypoint = r.getOpposite(w);
-					assignLength(w, r, waypoint);
-					assignDanger(w, r, waypoint);
-					assignDifficulty(w, r, waypoint);
+					assign(0, w, r, waypoint);
+					assign(1, w, r, waypoint);
+					assign(2, w, r, waypoint);
 					tempQueue.add(waypoint);
 				}
 				visited.add(w);
@@ -47,22 +46,14 @@ public class JJourney {
 			queue.addAll(tempQueue);
 		}
 	}
-
-	private void assignLength(Waypoint w, Road r, Waypoint w2) {
+	
+	private void assign(int i, Waypoint w, Road r, Waypoint w2) {
 		w2.setLengthPrevious(w);
-		w2.setLength(w.getLength() + r.getLength());
-	}
-
-	private void assignDanger(Waypoint w, Road r, Waypoint w2) {
-
+		w2.setLength(i, w.getLength(i) + r.getLength());
 		w2.setDangerPrevious(w);
-		w2.setDanger(r.getDanger() + w2.getDangerPrevious().getDanger());
-	}
-
-	private void assignDifficulty(Waypoint w, Road r, Waypoint w2) {
+		w2.setDanger(i, r.getDanger() + w2.getDangerPrevious().getDanger(i));
 		w2.setDifficultyPrevious(w);
-		w2.setDifficulty(r.getDifficulty() + w2.getLengthPrevious().getDifficulty());
-
+		w2.setDifficulty(i, r.getDifficulty() + w2.getLengthPrevious().getDifficulty(i));
 	}
 	
 	public ArrayList<Waypoint> shortestDistance(Waypoint waypoint) {

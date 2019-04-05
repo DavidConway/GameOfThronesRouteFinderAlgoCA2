@@ -238,16 +238,15 @@ public class Controller {
 		destination = waypoint;
 		System.out.println(""+destination.getMapX()+""+destination.getMapY());
 		journeyEnd.setText(waypoint.getName().getText());
-		//journeyMenu(waypoint).show(waypoint.getIView(), Side.BOTTOM, 0, 0);
-		SDEase.setText(activeJourney.shortestDistance(waypoint).get(0).getDifficulty()+"");
-		SDDanger.setText(activeJourney.shortestDistance(waypoint).get(0).getDanger()+"");
-		SDDistance.setText(activeJourney.shortestDistance(waypoint).get(0).getLength()+"");
-		LDDistance.setText(activeJourney.leastDangerous(waypoint).get(0).getLength()+"");
-		LDDanger.setText(activeJourney.leastDangerous(waypoint).get(0).getDanger()+"");
-		LDEase.setText(activeJourney.leastDangerous(waypoint).get(0).getDifficulty()+"");
-		MEDistance.setText(activeJourney.leastDifficult(waypoint).get(0).getLength()+"");
-		MEDanger.setText(activeJourney.leastDifficult(waypoint).get(0).getDanger()+"");
-		MEEase.setText(activeJourney.leastDifficult(waypoint).get(0).getDifficulty()+"");
+		SDEase.setText(activeJourney.shortestDistance(waypoint).get(0).getDifficulty(0)+"");
+		SDDanger.setText(activeJourney.shortestDistance(waypoint).get(0).getDanger(0)+"");
+		SDDistance.setText(activeJourney.shortestDistance(waypoint).get(0).getLength(0)+"");
+		LDDistance.setText(activeJourney.leastDangerous(waypoint).get(0).getLength(1)+"");
+		LDDanger.setText(activeJourney.leastDangerous(waypoint).get(0).getDanger(1)+"");
+		LDEase.setText(activeJourney.leastDangerous(waypoint).get(0).getDifficulty(1)+"");
+		MEDistance.setText(activeJourney.leastDifficult(waypoint).get(0).getLength(2)+"");
+		MEDanger.setText(activeJourney.leastDifficult(waypoint).get(0).getDanger(2)+"");
+		MEEase.setText(activeJourney.leastDifficult(waypoint).get(0).getDifficulty(2)+"");
 	}
 
 	private void setStart(Waypoint waypoint) {
