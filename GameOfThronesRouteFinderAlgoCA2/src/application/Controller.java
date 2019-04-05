@@ -313,17 +313,8 @@ public class Controller {
 	@FXML
 	private void generate(ActionEvent event) {
 		System.out.println("ding");
-		int mode = 0;
-		if (searchSetting==0) {
-			mode = 0;
-		} else if (searchSetting==1) {
-			mode = 1;
-		} else if (searchSetting==2) {
-			mode = 2;
-		}
-
 		if (beginning != null && destination != null) {
-			for (Journey current : journeyRouter.router(beginning, destination, mode)) {
+			for (Journey current : journeyRouter.router(beginning, destination, searchSetting)) {
 				Waypoint start = null;
 				Waypoint end = null;
 				for (Waypoint currentPoint : current.getWaypoints()) {
