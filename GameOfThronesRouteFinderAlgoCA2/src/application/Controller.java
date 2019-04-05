@@ -23,8 +23,7 @@ import javafx.scene.shape.StrokeType;
 import javafx.stage.Screen;
 
 public class Controller {
-	
-	
+
 	@FXML
 	AnchorPane mapAnchor;
 	@FXML
@@ -41,18 +40,18 @@ public class Controller {
 	private Label LDDistance, LDDanger, LDEase;
 	@FXML
 	private Label MEDistance, MEDanger, MEEase;
-	
+
 	//
 	@FXML
-	private ChoiceBox<String> findMode;
-
+	private ChoiceBox<MenuItem> findMode;
 
 	ContextMenu activeMenu = new ContextMenu();
 	JJourney activeJourney;
 	Waypoint beginning, destination;
 	Road activeRoad = new Road();
-	Waypoint startRoad,endRoad;
-	
+	Waypoint startRoad, endRoad;
+	int searchSetting;
+
 	ArrayList<Line> routhLines = new ArrayList<Line>();
 
 	Image map = new Image("/images/map.png");
@@ -65,9 +64,20 @@ public class Controller {
 		mapPane.setFitWidth(Screen.getPrimary().getVisualBounds().getWidth());
 		mapAnchor.setMinWidth(mapPane.getFitWidth());
 		mapPane.setOnMouseClicked(e -> baseMenu(e.getX(), e.getY()).show(mapAnchor, null, e.getX(), e.getY()));
-		
-		//choicebox stuf//
-		findMode.getItems().addAll("lenth","danger","dificulty");
+
+		// choicebox stuf//
+		MenuItem item1 = new MenuItem("Length");
+		item1.setOnAction(e -> setChoice(0));
+		MenuItem item2 = new MenuItem("Danger");
+		item2.setOnAction(e -> setChoice(1));
+		MenuItem item3 = new MenuItem("Difficulty");
+		item3.setOnAction(e -> setChoice(2));
+		findMode.getItems().addAll(item1, item2, item3);
+	}
+
+	private void setChoice(int i) {
+		this.searchSetting = i;
+		runChoice();
 	}
 
 	public ContextMenu baseMenu(double x, double y) {
@@ -95,7 +105,7 @@ public class Controller {
 		iView.setOnMouseClicked(e -> nodeMenu(waypoint).show(iView, Side.BOTTOM, 0, 0));
 		return waypoint;
 	}
-	
+
 	private void setName(Waypoint waypoint) {
 		if (mapAnchor.getChildren().contains(waypoint.getName())) {
 			waypoint.getName().requestFocus();
@@ -126,8 +136,8 @@ public class Controller {
 		activeMenu.getItems().addAll(item1, item2, item3, item4, item5, item6);
 		return activeMenu;
 	}
-	public ContextMenu journeyMenu(Waypoint waypoint)
-	{
+
+	public ContextMenu journeyMenu(Waypoint waypoint) {
 		if (activeMenu.isShowing()) {
 			activeMenu.hide();
 		}
@@ -176,40 +186,39 @@ public class Controller {
 		double startY = startRoad.getMapY();
 		double endX = endRoad.getMapX();
 		double endY = endRoad.getMapY();
-		
-		startX = startX - (20*(startX-endX))/Math.sqrt(w * w + h * h);
-		startY = startY - (20*(startY-endY))/Math.sqrt(w * w + h * h);
-		endX = endX - (20*(endX-startX))/Math.sqrt(w * w + h * h);
-		endY = endY - (20*(endY-startY))/Math.sqrt(w * w + h * h);
-		
+
+		startX = startX - (20 * (startX - endX)) / Math.sqrt(w * w + h * h);
+		startY = startY - (20 * (startY - endY)) / Math.sqrt(w * w + h * h);
+		endX = endX - (20 * (endX - startX)) / Math.sqrt(w * w + h * h);
+		endY = endY - (20 * (endY - startY)) / Math.sqrt(w * w + h * h);
+
 		Line line = new Line(startX, startY, endX, endY);
 		line.setStrokeLineCap(StrokeLineCap.ROUND);
 		line.setStrokeType(StrokeType.OUTSIDE);
 		line.setStroke(Color.BEIGE.darker().darker());
-		
+
 		line.setStrokeWidth(3);
 		line.getStrokeDashArray().addAll(25d, 15d);
-		
+
 		Road road = new Road(startRoad, endRoad, (Math.sqrt(w * w + h * h)), line);
-		
+
 		line.setOnMousePressed(e -> displayRoad(road));
 		line.setOnContextMenuRequested(e -> roadMenu(road));
-		
-		print("RoadStart: " +road.getStart().getName().getText());
-		
+
+		print("RoadStart: " + road.getStart().getName().getText());
+
 		mapAnchor.getChildren().add(line);
 		buildStart.setText("(Empty)");
 		buildEnd.setText("(Empty)");
 		activeRoad.setStart(null);
 		activeRoad.setEnd(null);
 	}
-	void print(String string)
-	{
+
+	void print(String string) {
 		System.out.println(string);
 	}
-	
-	private void roadMenu(Road road)
-	{
+
+	private void roadMenu(Road road) {
 		if (activeMenu.isShowing()) {
 			activeMenu.hide();
 		}
@@ -225,9 +234,9 @@ public class Controller {
 		roadStart.setText(road.getStart().getName().getText());
 		roadEnd.setText(road.getEnd().getName().getText());
 		roadDanger.setText(road.getDanger() + "");
-		roadDanger.setOnAction(e-> road.setDanger(Integer.parseInt(roadDanger.getText())));
+		roadDanger.setOnAction(e -> road.setDanger(Integer.parseInt(roadDanger.getText())));
 		roadDifficulty.setText(road.getDifficulty() + "");
-		roadDifficulty.setOnAction(e-> road.setDifficulty(Integer.parseInt(roadDifficulty.getText())));
+		roadDifficulty.setOnAction(e -> road.setDifficulty(Integer.parseInt(roadDifficulty.getText())));
 		roadLength.setText(road.getLength() + "");
 	}
 
@@ -238,77 +247,98 @@ public class Controller {
 
 	private void setEnd(Waypoint waypoint) {
 		destination = waypoint;
-		System.out.println(""+destination.getMapX()+""+destination.getMapY());
+		System.out.println("" + destination.getMapX() + "" + destination.getMapY());
 		journeyEnd.setText(waypoint.getName().getText());
 		setJourneyInfo(waypoint);
-		for (Waypoint w: activeJourney.shortestDistance(waypoint))
+
+		runChoice();
+	}
+
+	private void runChoice() {
+		for (Waypoint w: Waypoint.allWaypoints)
 		{
-			for (Road r: w.getConnectedRoads())
-			{
-				if (r.getEnd() == w.getLengthPrevious()|| r.getStart()==w.getLengthPrevious())
-				{
-					r.getLine().setStroke(Color.RED);
+			for (Road r : w.getConnectedRoads()) {
+				r.getLine().setStroke(Color.BEIGE.darker().darker());
+			}
+		}
+		if (searchSetting == 0) {
+			for (Waypoint w : activeJourney.shortestDistance(destination)) {
+				for (Road r : w.getConnectedRoads()) {
+					if (r.getEnd() == w.getLengthPrevious() || r.getStart() == w.getLengthPrevious()) {
+						r.getLine().setStroke(Color.RED);
+					}
+				}
+			}
+		} else if (searchSetting == 1) {
+			for (Waypoint w : activeJourney.leastDangerous(destination)) {
+				for (Road r : w.getConnectedRoads()) {
+					if (r.getEnd() == w.getDangerPrevious() || r.getStart() == w.getDangerPrevious()) {
+						r.getLine().setStroke(Color.RED);
+					}
+				}
+			}
+		} else if (searchSetting == 2) {
+			for (Waypoint w : activeJourney.leastDifficult(destination)) {
+				for (Road r : w.getConnectedRoads()) {
+					if (r.getEnd() == w.getDifficultyPrevious() || r.getStart() == w.getDifficultyPrevious()) {
+						r.getLine().setStroke(Color.RED);
+					}
 				}
 			}
 		}
 	}
 
 	private void setJourneyInfo(Waypoint waypoint) {
-		SDEase.setText(waypoint.getDifficulty(0)+"");
-		SDDanger.setText(waypoint.getDanger(0)+"");
-		SDDistance.setText(waypoint.getLength(0)+"");
-		LDDistance.setText(waypoint.getLength(1)+"");
-		LDDanger.setText(waypoint.getDanger(1)+"");
-		LDEase.setText(waypoint.getDifficulty(1)+"");
-		MEDistance.setText(waypoint.getLength(2)+"");
-		MEDanger.setText(waypoint.getDanger(2)+"");
-		MEEase.setText(waypoint.getDifficulty(2)+"");
+		SDEase.setText(waypoint.getDifficulty(0) + "");
+		SDDanger.setText(waypoint.getDanger(0) + "");
+		SDDistance.setText(waypoint.getLength(0) + "");
+		LDDistance.setText(waypoint.getLength(1) + "");
+		LDDanger.setText(waypoint.getDanger(1) + "");
+		LDEase.setText(waypoint.getDifficulty(1) + "");
+		MEDistance.setText(waypoint.getLength(2) + "");
+		MEDanger.setText(waypoint.getDanger(2) + "");
+		MEEase.setText(waypoint.getDifficulty(2) + "");
 	}
 
 	private void setStart(Waypoint waypoint) {
 		beginning = waypoint;
-		System.out.println(""+beginning.getMapX()+""+beginning.getMapY());
+		System.out.println("" + beginning.getMapX() + "" + beginning.getMapY());
 		journeyStart.setText(waypoint.getName().getText());
 		activeJourney = new JJourney(waypoint);
 	}
-	
+
 	@FXML
 	private void generate(ActionEvent event) {
 		System.out.println("ding");
 		int mode = 0;
-		if(findMode.getValue().toString() == "lenth" ) {
+		if (findMode.getValue().toString() == "lenth") {
 			mode = 0;
-		}
-		else if(findMode.getValue().toString() == "danger") {
+		} else if (findMode.getValue().toString() == "danger") {
 			mode = 1;
-		}
-		else if(findMode.getValue().toString() == "dificulty") {
+		} else if (findMode.getValue().toString() == "dificulty") {
 			mode = 2;
 		}
-		
-		if(beginning != null && destination !=null) {
-			for(Journey current: journeyRouter.router(beginning, destination, mode)) {
+
+		if (beginning != null && destination != null) {
+			for (Journey current : journeyRouter.router(beginning, destination, mode)) {
 				Waypoint start = null;
 				Waypoint end = null;
-				for(Waypoint currentPoint: current.getWaypoints()) {
-					if(end == null) {//STOPS THINGS FROM BRAKING
+				for (Waypoint currentPoint : current.getWaypoints()) {
+					if (end == null) {// STOPS THINGS FROM BRAKING
 						end = currentPoint;
 						start = currentPoint;
-					}
-					else{
+					} else {
 						end = start;
 						start = currentPoint;
 					}
-					
-					//TO DO USE START AND END POINTS TO CREATE COLORED LINES//
-					
+
+					// TO DO USE START AND END POINTS TO CREATE COLORED LINES//
+
 					//
-					
+
 				}
 			}
 		}
 	}
-	
-	
 
 }
