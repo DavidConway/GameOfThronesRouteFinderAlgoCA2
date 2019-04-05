@@ -241,6 +241,16 @@ public class Controller {
 		System.out.println(""+destination.getMapX()+""+destination.getMapY());
 		journeyEnd.setText(waypoint.getName().getText());
 		setJourneyInfo(waypoint);
+		for (Waypoint w: activeJourney.shortestDistance(waypoint))
+		{
+			for (Road r: w.getConnectedRoads())
+			{
+				if (r.getEnd() == w.getLengthPrevious()|| r.getStart()==w.getLengthPrevious())
+				{
+					r.getLine().setStroke(Color.RED);
+				}
+			}
+		}
 	}
 
 	private void setJourneyInfo(Waypoint waypoint) {
