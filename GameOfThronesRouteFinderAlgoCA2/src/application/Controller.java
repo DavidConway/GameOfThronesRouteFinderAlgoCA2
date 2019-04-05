@@ -13,7 +13,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.CycleMethod;
+import javafx.scene.paint.LinearGradient;
+import javafx.scene.paint.Stop;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.StrokeLineCap;
+import javafx.scene.shape.StrokeType;
 import javafx.stage.Screen;
 
 public class Controller {
@@ -165,24 +171,35 @@ public class Controller {
 		double w, h; // width, height
 		w = Math.abs(startRoad.getMapX() - endRoad.getMapX());
 		h = Math.abs(startRoad.getMapY() - endRoad.getMapY());
+
+		double startX = startRoad.getMapX();
+		double startY = startRoad.getMapY();
+		double endX = endRoad.getMapX();
+		double endY = endRoad.getMapY();
 		
-		Line line = new Line(startRoad.getMapX(), startRoad.getMapY(), endRoad.getMapX(), endRoad.getMapY());
+		startX = startX - (20*(startX-endX))/Math.sqrt(w * w + h * h);
+		startY = startY - (20*(startY-endY))/Math.sqrt(w * w + h * h);
+		endX = endX - (20*(endX-startX))/Math.sqrt(w * w + h * h);
+		endY = endY - (20*(endY-startY))/Math.sqrt(w * w + h * h);
 		
+		Line line = new Line(startX, startY, endX, endY);
+		line.setStrokeLineCap(StrokeLineCap.ROUND);
+		line.setStrokeType(StrokeType.OUTSIDE);
+		line.setStroke(Color.BEIGE.darker().darker());
 		Road road = new Road(startRoad, endRoad, (Math.sqrt(w * w + h * h)), line);
-		line.setStrokeWidth(4);
-		road.setStart(startRoad);
-		road.setEnd(endRoad);
+		line.setStrokeWidth(3);
+		line.getStrokeDashArray().addAll(25d, 15d);
 		
 		line.setOnMousePressed(e -> displayRoad(road));
-		//line.setOnContextMenuRequested(e -> roadMenu(road));
+		line.setOnContextMenuRequested(e -> roadMenu(road));
 		
 		print("RoadStart: " +road.getStart().getName().getText());
 		
 		mapAnchor.getChildren().add(line);
 		buildStart.setText("(Empty)");
 		buildEnd.setText("(Empty)");
-		//activeRoad.setStart(null);
-		//activeRoad.setEnd(null);
+		activeRoad.setStart(null);
+		activeRoad.setEnd(null);
 	}
 	void print(String string)
 	{
