@@ -2,11 +2,14 @@ package application;
 
 import java.util.ArrayList;
 
+import javafx.scene.shape.Line;
+
 public class Road {
 	static ArrayList<Road> allRouts = new ArrayList<>();
 	Waypoint start, end;
 	int danger = 0, difficulty = 0;
 	double length = 0;
+	private Line line;
 
 	Road(Waypoint start, Waypoint end, int danger, double length, int difficulty) {
 		this.start = start;
@@ -20,10 +23,11 @@ public class Road {
 		end.addRoad(this);
 	}
 
-	Road(Waypoint start, Waypoint end, double length) {
+	Road(Waypoint start, Waypoint end, double length, Line line) {
 		this.start = start;
 		this.end = end;
 		this.length = length;
+		this.setLine(line);
 		
 		allRouts.add(this);
 		start.addRoad(this);
@@ -97,6 +101,14 @@ public class Road {
 
 	public void setLength(double length) {
 		this.length = length;
+	}
+
+	public Line getLine() {
+		return line;
+	}
+
+	public void setLine(Line line) {
+		this.line = line;
 	}
 
 }

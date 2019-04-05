@@ -165,17 +165,28 @@ public class Controller {
 		double w, h; // width, height
 		w = Math.abs(startRoad.getMapX() - endRoad.getMapX());
 		h = Math.abs(startRoad.getMapY() - endRoad.getMapY());
-
-		Road road = new Road(startRoad, endRoad, (Math.sqrt(w * w + h * h)));
+		
 		Line line = new Line(startRoad.getMapX(), startRoad.getMapY(), endRoad.getMapX(), endRoad.getMapY());
+		
+		Road road = new Road(startRoad, endRoad, (Math.sqrt(w * w + h * h)), line);
+		line.setStrokeWidth(4);
+		road.setStart(startRoad);
+		road.setEnd(endRoad);
+		
 		line.setOnMousePressed(e -> displayRoad(road));
-		line.setOnContextMenuRequested(e -> roadMenu(road));
-		line.setStrokeWidth(2);
+		//line.setOnContextMenuRequested(e -> roadMenu(road));
+		
+		print("RoadStart: " +road.getStart().getName().getText());
+		
 		mapAnchor.getChildren().add(line);
 		buildStart.setText("(Empty)");
 		buildEnd.setText("(Empty)");
-		activeRoad.setStart(null);
-		activeRoad.setEnd(null);
+		//activeRoad.setStart(null);
+		//activeRoad.setEnd(null);
+	}
+	void print(String string)
+	{
+		System.out.println(string);
 	}
 	
 	private void roadMenu(Road road)
