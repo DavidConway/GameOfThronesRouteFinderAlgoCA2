@@ -3,6 +3,7 @@ package application;
 import java.util.ArrayList;
 
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Side;
 import javafx.scene.control.ContextMenu;
@@ -12,6 +13,8 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -100,7 +103,15 @@ public class Controller {
 	private Waypoint createNode(double x, double y) {
 		Waypoint waypoint = new Waypoint(x, y);
 		ImageView iView = waypoint.getIView();
-		iView.setOnMouseClicked(e -> nodeMenu(waypoint).show(iView, Side.BOTTOM, 0, 0));
+		
+		iView.setOnMouseClicked(new EventHandler<MouseEvent>(){
+		    @Override
+		    public void handle(MouseEvent t) {
+		        if(t.getButton() == MouseButton.PRIMARY) nodeMenu(waypoint).show(iView, Side.BOTTOM, 0, 0);
+		        if(t.getButton() == MouseButton.SECONDARY) editNodeMenu(waypoint).show(iView, Side.BOTTOM, 0, 0);
+		    }
+		});
+		
 		return waypoint;
 	}
 
@@ -112,18 +123,13 @@ public class Controller {
 			waypoint.getName().requestFocus();
 		}
 	}
-
-	public ContextMenu nodeMenu(Waypoint waypoint) {
+	public ContextMenu editNodeMenu(Waypoint waypoint) {
 		if (activeMenu.isShowing()) {
 			activeMenu.hide();
 		}
 		activeMenu = new ContextMenu();
 
-		MenuItem item1 = new MenuItem("Begin Journey");
-		item1.setOnAction(e -> setStart(waypoint));
-		MenuItem item2 = new MenuItem("Set Destination");
-		item2.setOnAction(e -> setEnd(waypoint));
-		MenuItem item3 = new MenuItem("Set Road Beginning");
+		MenuItem item3 = new MenuItem("Set as Road Start");
 		item3.setOnAction(e -> beginConnection(waypoint));
 		MenuItem item4 = new MenuItem("Set Road End");
 		item4.setOnAction(e -> endConnection(waypoint));
@@ -131,7 +137,23 @@ public class Controller {
 		item5.setOnAction(e -> setName(waypoint));
 		MenuItem item6 = new MenuItem("Remove Waypoint");
 		item6.setOnAction(e -> remove(waypoint));
-		activeMenu.getItems().addAll(item1, item2, item3, item4, item5, item6);
+		activeMenu.getItems().addAll(item3, item4, item5, item6);
+		return activeMenu;
+	}
+
+	public ContextMenu nodeMenu(Waypoint waypoint) {
+		if (activeMenu.isShowing()) {
+			activeMenu.hide();
+		}
+		activeMenu = new ContextMenu();
+
+	
+		MenuItem item1 = new MenuItem("Begin Journey");
+		item1.setOnAction(e -> setStart(waypoint));
+		MenuItem item2 = new MenuItem("Set Destination");
+		item2.setOnAction(e -> setEnd(waypoint));
+
+		activeMenu.getItems().addAll(item1, item2);
 		return activeMenu;
 	}
 
@@ -177,8 +199,8 @@ public class Controller {
 
 	private void buildRoad() {
 		double w, h; // width, height
-		w = Math.abs(startRoad.getMapX() - endRoad.getMapX());
-		h = Math.abs(startRoad.getMapY() - endRoad.getMapY());
+		w = startRoad.getMapX() - endRoad.getMapX();
+		h = startRoad.getMapY() - endRoad.getMapY();
 
 		double startX = startRoad.getMapX();
 		double startY = startRoad.getMapY();
