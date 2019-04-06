@@ -160,7 +160,7 @@ public class Controller {
 	}
 
 	private boolean checkConnection() {
-		if (activeRoad.getStart() != null && activeRoad.getEnd() != null) {
+		if (activeRoad.getStart() != null && activeRoad.getEnd() != null && activeRoad.getStart() != activeRoad.getEnd()) {
 			return true;
 		} else
 			return false;
