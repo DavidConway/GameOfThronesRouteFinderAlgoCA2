@@ -51,6 +51,10 @@ public class Controller {
 	Road activeRoad = new Road();
 	Waypoint startRoad, endRoad;
 	int searchSetting;
+	
+	Waypoint[] goTo = null, avoid = null;
+	ArrayList<Waypoint> goToHold = new ArrayList<Waypoint>();
+	ArrayList<Waypoint> avoidHold = new ArrayList<Waypoint>();
 
 	ArrayList<Line> routhLines = new ArrayList<Line>();
 
@@ -78,7 +82,7 @@ public class Controller {
 
 	private void setChoice(int i) {
 		this.searchSetting = i;
-		runChoice();
+		//runChoice();
 	}
 
 	public ContextMenu baseMenu(double x, double y) {
@@ -271,10 +275,10 @@ public class Controller {
 		journeyEnd.setText(waypoint.getName().getText());
 		setJourneyInfo(waypoint);
 
-		runChoice();
+		//runChoice();
 	}
 
-	private void runChoice() {
+	/*private void runChoice() {
 		for (Waypoint w: Waypoint.allWaypoints)
 		{
 			for (Road r : w.getConnectedRoads()) {
@@ -306,7 +310,7 @@ public class Controller {
 				}
 			}
 		}
-	}
+	}*/
 
 	private void setJourneyInfo(Waypoint waypoint) {
 		SDEase.setText(waypoint.getDifficulty(0) + "");
@@ -324,30 +328,36 @@ public class Controller {
 		beginning = waypoint;
 		System.out.println("" + beginning.getMapX() + "" + beginning.getMapY());
 		journeyStart.setText(waypoint.getName().getText());
-		activeJourney = new JJourney(waypoint);
+		//activeJourney = new JJourney(waypoint);
 	}
 
 	@FXML
 	private void generate(ActionEvent event) {
+		
+		goTo = goToHold.toArray(new Waypoint[goToHold.size()]);
+		avoid = avoidHold.toArray(new Waypoint[goToHold.size()]);
+		
 		System.out.println("ding");
+		int color = 0;
 		if (beginning != null && destination != null) {
-			for (Journey current : journeyRouter.router(beginning, destination, searchSetting)) {
-				Waypoint start = null;
-				Waypoint end = null;
+			for (Journey current : journeyRouter.router(beginning, destination,goTo,avoid, searchSetting)) {
 				for (Waypoint currentPoint : current.getWaypoints()) {
-					if (end == null) {// STOPS THINGS FROM BRAKING
-						end = currentPoint;
-						start = currentPoint;
-					} else {
-						end = start;
-						start = currentPoint;
+					for (Road r : currentPoint.getConnectedRoads()) {
+						if (current.waypoints.contains(r.getOpposite(currentPoint))) {//finds with road to color
+							if(color == 0) {
+								r.getLine().setStroke(Color.RED);
+							}
+							else if(color == 1) {
+								r.getLine().setStroke(Color.GREEN);
+							}
+							else if(color == 2){
+								r.getLine().setStroke(Color.BLUE);
+							}
+						}
 					}
-
-					// TO DO USE START AND END POINTS TO CREATE COLORED LINES//
-
-					//
-
+					System.out.println(""+color+" : "+ currentPoint.getMapX()+" "+currentPoint.getMapY());
 				}
+				color++;//change the color as it gose
 			}
 		}
 	}

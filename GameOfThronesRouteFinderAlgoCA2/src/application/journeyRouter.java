@@ -13,17 +13,19 @@ public class journeyRouter {
 
 	public static ArrayList<Journey> router(Waypoint start, Waypoint end, Waypoint[] goTo, Waypoint[] avoid, int show) {
 		avoidWaypoints = avoid;
+		goToWaypoints = goTo;
 		Journey startPoint = new Journey();
 		showMode = show;
 		startPoint.getWaypoints().add(start);
 		possibleRoutes.add(startPoint);
-		while (finalRouths.size() != 3) {
+		while (finalRouths.size() != 3 && possibleRoutes != null) {
 			currentJourney = extendPoint();// gets the shortest journey
 			if (currentJourney.getWaypoints().getLast() == end) { // sees if that journey has made it to destination
 				if (currentJourney.goseToAllPoints()) {// makes sur that the journey passes trow all needed waypoints
 					finalRouths.add(currentJourney);
 				}
 				possibleRoutes.remove(currentJourney);//removes journey from possible rotes so it dose not get added twice
+				currentJourney = extendPoint();
 			}
 			currentJourney.extenOut();
 			
@@ -37,7 +39,7 @@ public class journeyRouter {
 		showMode = show;
 		startPoint.getWaypoints().add(start);
 		possibleRoutes.add(startPoint);
-		while (finalRouths.size() != 3) {
+		while (finalRouths.size() != 3 && possibleRoutes != null) {
 			currentJourney = extendPoint();
 			Waypoint test = currentJourney.getWaypoints().getLast();
 			if (test == end) {
