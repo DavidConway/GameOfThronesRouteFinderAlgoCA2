@@ -1,5 +1,11 @@
 package application;
 
+import java.beans.XMLDecoder;
+import java.beans.XMLEncoder;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javafx.event.ActionEvent;
@@ -359,6 +365,54 @@ public class Controller {
 				}
 				color++;//change the color as it gose
 			}
+		}
+	}
+	
+	
+	
+	@FXML
+	void save() {
+		try {
+			FileOutputStream outWaypoints = new FileOutputStream(new File("src/Waypoints.xml"));
+			XMLEncoder encoW = new XMLEncoder(outWaypoints);
+			encoW.writeObject(Waypoint.allWaypoints);
+			encoW.close();
+			outWaypoints.close();
+
+			FileOutputStream outRoad = new FileOutputStream(new File("src/Road.xml"));
+			XMLEncoder encoR = new XMLEncoder(outRoad);
+			encoR.writeObject(Road.allRouts);
+			encoR.close();
+			outRoad.close();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@FXML
+	void clear() {
+		Waypoint.allWaypoints = new ArrayList<Waypoint>();
+		Road.allRouts = new ArrayList<Road>();
+	}
+
+	@SuppressWarnings("unchecked")
+	@FXML
+	void load() {
+		try {
+			FileInputStream inWaypoint = new FileInputStream(new File("src/Waypoints"));
+			XMLDecoder decoW = new XMLDecoder(inWaypoint);
+			Waypoint.allWaypoints = (ArrayList<Waypoint>) decoW.readObject();
+			decoW.close();
+			inWaypoint.close();
+
+			FileInputStream inRoad = new FileInputStream(new File("src/Road.xml"));
+			XMLDecoder decoR = new XMLDecoder(inRoad);
+			Road.allRouts = (ArrayList<Road>) decoR.readObject();
+			decoR.close();
+			inRoad.close();
+		} catch (IOException e) {
+			System.out.println("erroer");
 		}
 	}
 
