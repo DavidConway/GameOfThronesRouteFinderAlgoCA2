@@ -5,11 +5,11 @@ import java.util.ArrayList;
 import javafx.scene.shape.Line;
 
 public class Road {
-	static ArrayList<Road> allRouts = new ArrayList<>();
-	Waypoint start, end;
-	int danger = 0, difficulty = 0;
-	double length = 0;
-	private Line line;
+	public static ArrayList<Road> allRouts = new ArrayList<>();
+	public Waypoint start, end;
+	public int danger = 0, difficulty = 0;
+	public double length = 0;
+	public Line line;
 
 	Road(Waypoint start, Waypoint end, int danger, double length, int difficulty) {
 		this.start = start;

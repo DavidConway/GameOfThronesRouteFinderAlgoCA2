@@ -372,23 +372,10 @@ public class Controller {
 	
 	@FXML
 	void save() {
-		try {
-			FileOutputStream outWaypoints = new FileOutputStream(new File("./GameOfThronesRouteFinderAlgoCA2/src/Waypoints.xml"));
-			XMLEncoder encoW = new XMLEncoder(outWaypoints);
-			encoW.writeObject(Waypoint.allWaypoints);
-			encoW.close();
-			outWaypoints.close();
-
-			FileOutputStream outRoad = new FileOutputStream(new File("./GameOfThronesRouteFinderAlgoCA2/src/RoadS.xml"));
-			XMLEncoder encoR = new XMLEncoder(outRoad);
-			encoR.writeObject(Road.allRouts);
-			encoR.close();
-			outRoad.close();
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+			SaveLoad.save();
 	}
+
+
 
 	@FXML
 	void clear() {
@@ -396,27 +383,12 @@ public class Controller {
 		Road.allRouts = new ArrayList<Road>();
 	}
 
-	@SuppressWarnings("unchecked")
+
 	@FXML
 	void load() {
-		try {
-			FileInputStream inWaypoint = new FileInputStream(new File("./GameOfThronesRouteFinderAlgoCA2/src/Waypoints.xml"));
-			XMLDecoder decoW = new XMLDecoder(inWaypoint);
-			Waypoint.allWaypoints = (ArrayList<Waypoint>) decoW.readObject();
-			decoW.close();
-			inWaypoint.close();
-
-			FileInputStream inRoad = new FileInputStream(new File("./GameOfThronesRouteFinderAlgoCA2/src/RoadS.xml"));
-			XMLDecoder decoR = new XMLDecoder(inRoad);
-			Road.allRouts = (ArrayList<Road>) decoR.readObject();
-			decoR.close();
-			inRoad.close();
-			
-			loadRoadsOnMap();
-			loadWaypointsMap();
-		} catch (IOException e) {
-			System.out.println("erroer");
-		}
+		SaveLoad.load();
+		loadRoadsOnMap();
+		loadWaypointsMap();
 	}
 
 	private void loadWaypointsMap() {

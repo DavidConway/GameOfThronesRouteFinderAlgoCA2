@@ -34,7 +34,6 @@ public class Waypoint {
 	}
 
 	public Waypoint() {
-		allWaypoints.add(this);
 	}
 
 	public void addRoad(Road newRoad) {
