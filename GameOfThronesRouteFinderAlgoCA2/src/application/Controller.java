@@ -373,13 +373,13 @@ public class Controller {
 	@FXML
 	void save() {
 		try {
-			FileOutputStream outWaypoints = new FileOutputStream(new File("src/Waypoints.xml"));
+			FileOutputStream outWaypoints = new FileOutputStream(new File("./GameOfThronesRouteFinderAlgoCA2/src/Waypoints.xml"));
 			XMLEncoder encoW = new XMLEncoder(outWaypoints);
 			encoW.writeObject(Waypoint.allWaypoints);
 			encoW.close();
 			outWaypoints.close();
 
-			FileOutputStream outRoad = new FileOutputStream(new File("src/Road.xml"));
+			FileOutputStream outRoad = new FileOutputStream(new File("./GameOfThronesRouteFinderAlgoCA2/src/RoadS.xml"));
 			XMLEncoder encoR = new XMLEncoder(outRoad);
 			encoR.writeObject(Road.allRouts);
 			encoR.close();
@@ -400,20 +400,57 @@ public class Controller {
 	@FXML
 	void load() {
 		try {
-			FileInputStream inWaypoint = new FileInputStream(new File("src/Waypoints"));
+			FileInputStream inWaypoint = new FileInputStream(new File("./GameOfThronesRouteFinderAlgoCA2/src/Waypoints.xml"));
 			XMLDecoder decoW = new XMLDecoder(inWaypoint);
 			Waypoint.allWaypoints = (ArrayList<Waypoint>) decoW.readObject();
 			decoW.close();
 			inWaypoint.close();
 
-			FileInputStream inRoad = new FileInputStream(new File("src/Road.xml"));
+			FileInputStream inRoad = new FileInputStream(new File("./GameOfThronesRouteFinderAlgoCA2/src/RoadS.xml"));
 			XMLDecoder decoR = new XMLDecoder(inRoad);
 			Road.allRouts = (ArrayList<Road>) decoR.readObject();
 			decoR.close();
 			inRoad.close();
+			
+			loadRoadsOnMap();
+			loadWaypointsMap();
 		} catch (IOException e) {
 			System.out.println("erroer");
 		}
+	}
+
+	private void loadWaypointsMap() {
+		for (Waypoint i: Waypoint.allWaypoints) {
+			Waypoint waypoint = i;
+			mapAnchor.getChildren().add(waypoint.getIView());
+			mapAnchor.getChildren().add(waypoint.getName());
+			waypoint.getName().requestFocus();
+		}
+		
+	}
+
+	private void loadRoadsOnMap() {
+		for(Road i: Road.allRouts) {
+			Line line = new Line(i.start.getMapX(), i.start.getMapY(), i.end.getMapX(), i.end.getMapY());
+			line.setStrokeLineCap(StrokeLineCap.ROUND);
+			line.setStrokeType(StrokeType.OUTSIDE);
+			line.setStroke(Color.BEIGE.darker().darker());
+
+			line.setStrokeWidth(3);
+			line.getStrokeDashArray().addAll(25d, 15d);
+			
+			line.setOnMousePressed(e -> displayRoad(i));
+			line.setOnContextMenuRequested(e -> roadMenu(i));
+			
+			print("RoadStart: " + i.getStart().getName().getText());
+
+			mapAnchor.getChildren().add(line);
+			buildStart.setText("(Empty)");
+			buildEnd.setText("(Empty)");
+			activeRoad.setStart(null);
+			activeRoad.setEnd(null);
+		}
+		
 	}
 
 }
