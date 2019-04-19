@@ -150,7 +150,11 @@ public class Controller {
 		item5.setOnAction(e -> setName(waypoint));
 		MenuItem item6 = new MenuItem("Remove Waypoint");
 		item6.setOnAction(e -> remove(waypoint));
-		activeMenu.getItems().addAll(item3, item4, item5, item6);
+		MenuItem item7 = new MenuItem("Go to Hold");
+		item6.setOnAction(e -> goToHold.add(waypoint));
+		MenuItem item8 = new MenuItem("Avoid Hold");
+		item6.setOnAction(e -> avoidHold.add(waypoint));
+		activeMenu.getItems().addAll(item3, item4, item5, item6, item7, item8);
 		return activeMenu;
 	}
 
