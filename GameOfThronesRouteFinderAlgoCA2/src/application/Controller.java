@@ -12,6 +12,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Side;
+import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
@@ -66,6 +67,7 @@ public class Controller {
 
 	Image map = new Image("/images/map.png");
 	ImageView mapPane = new ImageView(map);
+	
 
 	@FXML
 	public void initialize() {
@@ -73,6 +75,7 @@ public class Controller {
 		mapAnchor.getChildren().add(mapPane);
 		mapPane.setFitWidth(Screen.getPrimary().getVisualBounds().getWidth());
 		mapAnchor.setMinWidth(mapPane.getFitWidth());
+		mapPane.setId("map");
 		mapPane.setOnMouseClicked(e -> baseMenu(e.getX(), e.getY()).show(mapAnchor, null, e.getX(), e.getY()));
 
 		// choicebox stuf//
@@ -379,6 +382,9 @@ public class Controller {
 
 	@FXML
 	void clear() {
+		mapAnchor.getChildren().clear();
+		mapAnchor.getChildren().add(mapPane);
+
 		Waypoint.allWaypoints = new ArrayList<Waypoint>();
 		Road.allRouts = new ArrayList<Road>();
 	}
