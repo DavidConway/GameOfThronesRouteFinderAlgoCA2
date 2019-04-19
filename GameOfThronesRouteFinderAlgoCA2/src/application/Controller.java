@@ -78,17 +78,17 @@ public class Controller {
 		// choicebox stuf//
 		findMode.getItems().clear();
 		MenuItem item1 = new MenuItem("Length");
-		item1.setOnAction(e -> setChoice(0));
+		item1.setOnAction(e -> setChoice(0, "Length"));
 		MenuItem item2 = new MenuItem("Danger");
-		item2.setOnAction(e -> setChoice(1));
+		item2.setOnAction(e -> setChoice(1, "Danger"));
 		MenuItem item3 = new MenuItem("Difficulty");
-		item3.setOnAction(e -> setChoice(2));
+		item3.setOnAction(e -> setChoice(2, "Difficulty"));
 		findMode.getItems().addAll(item1, item2, item3);
 	}
 
-	private void setChoice(int i) {
+	private void setChoice(int i, String text) {
 		this.searchSetting = i;
-		//runChoice();
+		findMode.setText(text);
 	}
 
 	public ContextMenu baseMenu(double x, double y) {
