@@ -431,6 +431,7 @@ public class Controller {
 			buildEnd.setText("(Empty)");
 			activeRoad.setStart(null);
 			activeRoad.setEnd(null);
+			//AShwaoudboawd
 		}
 		
 	}
