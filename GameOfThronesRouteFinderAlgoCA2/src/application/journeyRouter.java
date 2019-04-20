@@ -10,6 +10,7 @@ public class journeyRouter {
 	static Waypoint[] goToWaypoints = null;
 	static int showMode = 0;
 	static Journey currentJourney;
+	static private boolean haveExtened;
 
 	public static ArrayList<Journey> router(Waypoint start, Waypoint end, Waypoint[] goTo, Waypoint[] avoid, int show) {
 		avoidWaypoints = avoid;
@@ -18,23 +19,29 @@ public class journeyRouter {
 		showMode = show;
 		startPoint.getWaypoints().add(start);
 		possibleRoutes.add(startPoint);
-		while (finalRouths.size() != 3 && possibleRoutes != null) {
+		while (finalRouths.size() != 3 && possibleRoutes.size() >= 1) {
 			currentJourney = extendPoint();// gets the shortest journey
 			if (currentJourney.getWaypoints().getLast() == end) { // sees if that journey has made it to destination
 				if (currentJourney.goseToAllPoints()) {// makes sur that the journey passes trow all needed waypoints
 					finalRouths.add(currentJourney);
 				}
+				currentJourney.extenOut();
+				haveExtened = true;
 				possibleRoutes.remove(currentJourney);//removes journey from possible rotes so it dose not get added twice
-				currentJourney = extendPoint();
+				//currentJourney = extendPoint();
 			}
-			currentJourney.extenOut();
+			
+			if(haveExtened == false) {
+				currentJourney.extenOut();
+			}
+			haveExtened = false;
 			
 		}
 		return finalRouths;
 
 	}
 	
-	public static ArrayList<Journey> router(Waypoint start, Waypoint end, int show) {
+	/*public static ArrayList<Journey> router(Waypoint start, Waypoint end, int show) {
 		Journey startPoint = new Journey();
 		showMode = show;
 		startPoint.getWaypoints().add(start);
@@ -51,7 +58,7 @@ public class journeyRouter {
 		}
 		return finalRouths;
 
-	}
+	}*/
 
 	private static void ensureWaypoints(Waypoint[] goTo) {
 		// TODO Auto-generated method stub
@@ -117,13 +124,10 @@ public class journeyRouter {
 			}
 			break;
 		}
-		if(avoidPoint(reternJourney)) {
-			
-		}
 		return reternJourney;
 	}
 
-	private static boolean avoidPoint(Journey reternJourney) {
+	private static boolean containsAvoidPoint(Journey reternJourney) {
 		for(Waypoint i: avoidWaypoints) {
 			if(i == reternJourney.getWaypoints().getLast()) {
 				return true;
