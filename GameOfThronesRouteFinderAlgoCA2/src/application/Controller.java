@@ -356,7 +356,8 @@ public class Controller {
 			for (Journey current : journeyRouter.router(beginning, destination,goTo,avoid, searchSetting)) {
 				for (Waypoint currentPoint : current.getWaypoints()) {
 					for (Road r : currentPoint.getConnectedRoads()) {
-						if (current.waypoints.contains(r.getOpposite(currentPoint))) {//finds with road to color
+						int index = (current.getWaypoints().indexOf(currentPoint))+1;
+						if (index < current.getWaypoints().size() && r.getOpposite(currentPoint) == current.getWaypoints().get(index)) {//finds with road to color
 							if(color == 0) {
 								r.getLine().setStroke(Color.RED);
 							}

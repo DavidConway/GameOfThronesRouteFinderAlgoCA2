@@ -98,6 +98,9 @@ public class journeyRouter {
 			break;
 		case 1:
 			for (Journey check : possibleRoutes) {
+				if(reternJourney == null) {
+					reternJourney = check;
+				}
 				if (check.getDanger() < reternJourney.getDanger() || reternJourney == null) {
 					reternJourney = check;
 				}
@@ -105,12 +108,27 @@ public class journeyRouter {
 			break;
 		case 2:
 			for (Journey check : possibleRoutes) {
+				if(reternJourney == null) {
+					reternJourney = check;
+				}
 				if (check.getDifficlty() < reternJourney.getDifficlty() || reternJourney == null) {
 					reternJourney = check;
 				}
 			}
 			break;
 		}
+		if(avoidPoint(reternJourney)) {
+			
+		}
 		return reternJourney;
+	}
+
+	private static boolean avoidPoint(Journey reternJourney) {
+		for(Waypoint i: avoidWaypoints) {
+			if(i == reternJourney.getWaypoints().getLast()) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

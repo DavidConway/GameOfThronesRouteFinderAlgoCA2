@@ -4,7 +4,7 @@ import java.util.LinkedList;
 
 public class Journey {
 	public LinkedList<Waypoint> waypoints = new LinkedList<Waypoint>();
-	double lenght = 0;
+	double lenght = 0.0;
 	int danger = 0;
 	int difficlty = 0;
 
