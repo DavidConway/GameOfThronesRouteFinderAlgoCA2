@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import javafx.scene.shape.Line;
 
 public class Road {
-	public static ArrayList<Road> allRouts = new ArrayList<>();
+	public static ArrayList<Road> allRoutes = new ArrayList<>();
 	public Waypoint start, end;
 	public int danger = 0, difficulty = 0;
 	public double length = 0;
@@ -18,7 +18,7 @@ public class Road {
 		this.length = length;
 		this.difficulty = difficulty;
 
-		allRouts.add(this);
+		allRoutes.add(this);
 		start.addRoad(this);
 		end.addRoad(this);
 	}
@@ -31,7 +31,7 @@ public class Road {
 		line.setOnMouseClicked(e-> deleteRoad(line));
 		
 		
-		allRouts.add(this);
+		allRoutes.add(this);
 		start.addRoad(this);
 		end.addRoad(this);
 
@@ -58,7 +58,7 @@ public class Road {
 	}
 
 	public void deleteRoad() {
-		Integer thisIndex = Road.allRouts.indexOf(this);
+		Integer thisIndex = Road.allRoutes.indexOf(this);
 		for (Waypoint check : Waypoint.allWaypoints) {
 			ArrayList<Integer> checksRoad = check.getConnectedRoughts();
 			if (checksRoad.contains(thisIndex)) {
@@ -70,7 +70,7 @@ public class Road {
 				}
 			}
 		}
-		allRouts.remove(this);
+		allRoutes.remove(this);
 		
 	}
 	public void deleteRoad(Line line) {

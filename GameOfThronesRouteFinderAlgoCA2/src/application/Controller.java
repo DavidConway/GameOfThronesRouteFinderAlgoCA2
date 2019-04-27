@@ -375,7 +375,7 @@ public class Controller {
 		mapAnchor.getChildren().add(mapPane);
 
 		Waypoint.allWaypoints = new ArrayList<Waypoint>();
-		Road.allRouts = new ArrayList<Road>();
+		Road.allRoutes = new ArrayList<Road>();
 	}
 
 
@@ -397,7 +397,7 @@ public class Controller {
 	}
 
 	private void loadRoadsOnMap() {
-		for(Road i: Road.allRouts) {
+		for(Road i: Road.allRoutes) {
 			Line line = new Line(i.start.getMapX(), i.start.getMapY(), i.end.getMapX(), i.end.getMapY());
 			line.setStrokeLineCap(StrokeLineCap.ROUND);
 			line.setStrokeType(StrokeType.OUTSIDE);

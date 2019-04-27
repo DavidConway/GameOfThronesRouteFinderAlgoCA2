@@ -6,19 +6,26 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class RoadTest {
+import javafx.scene.shape.Line;
 
-	@BeforeAll
-	static void setUpBeforeClass() throws Exception {
-	}
+class RoadTest {
+	Road r1, r2, r3;
+	Waypoint w1, w2;
+	Line line;
 
 	@BeforeEach
 	void setUp() throws Exception {
+		w1 = new Waypoint();
+		w2 = new Waypoint();
+		r1 = new Road(w1, w2, 5, line);
+		
 	}
+	
 
 	@Test
-	void test() {
-		fail("Not yet implemented");
+	void testDeleteRoad() {
+		r1.deleteRoad();
+		assertTrue(Road.allRoutes.isEmpty());
 	}
 
 }

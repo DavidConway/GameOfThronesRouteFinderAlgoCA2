@@ -13,7 +13,7 @@ public class SaveLoad {
 		try {
 			FileOutputStream outRoad = new FileOutputStream(new File("Road.xml"));
 			XMLEncoder encoR = new XMLEncoder(outRoad);
-			encoR.writeObject(Road.allRouts);
+			encoR.writeObject(Road.allRoutes);
 			encoR.close();
 			outRoad.close();
 
@@ -38,7 +38,7 @@ public class SaveLoad {
 
 			FileInputStream inRoad = new FileInputStream(new File("./GameOfThronesRouteFinderAlgoCA2/src/Road.xml"));
 			XMLDecoder decoR = new XMLDecoder(inRoad);
-			Road.allRouts = (ArrayList<Road>) decoR.readObject();
+			Road.allRoutes = (ArrayList<Road>) decoR.readObject();
 			decoR.close();
 			inRoad.close();
 			

@@ -11,10 +11,7 @@ import org.junit.jupiter.api.Test;
 
 class WaypointTest {
 	
-	Waypoint w1;
-	Waypoint w2;
-	Waypoint w3;
-	
+	Waypoint w1, w2, w3;
 
 	@BeforeEach
 	void setUp() throws Exception {

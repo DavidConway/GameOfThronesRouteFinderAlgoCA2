@@ -38,7 +38,7 @@ public class Waypoint {
 	}
 
 	public void addRoad(Road newRoad) {
-		int newRoadID = Road.allRouts.indexOf(newRoad);
+		int newRoadID = Road.allRoutes.indexOf(newRoad);
 		connectedRoadsIndexes.add(newRoadID);
 		connectedRoads.add(newRoad);
 	}
@@ -64,7 +64,7 @@ public class Waypoint {
 
 	public void deleteWaypoint() {
 		while (this.connectedRoadsIndexes.size()>0) {
-			Road removeRoad = Road.allRouts.get(0);
+			Road removeRoad = Road.allRoutes.get(0);
 			removeRoad.deleteRoad();
 		}
 		allWaypoints.remove(this);
