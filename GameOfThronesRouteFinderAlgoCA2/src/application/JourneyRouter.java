@@ -3,7 +3,7 @@ package application;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-public class journeyRouter {
+public class JourneyRouter {
 	static ArrayList<Journey> possibleRoutes = new ArrayList<Journey>();
 	static ArrayList<Journey> finalRouths = new ArrayList<Journey>();
 	static Waypoint[] avoidWaypoints = null;

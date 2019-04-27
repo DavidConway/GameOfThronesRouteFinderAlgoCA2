@@ -24,15 +24,15 @@ public class Journey {
 				newJourney.lenght = this.lenght + newRoad.length;// Fingers out the journey values
 				newJourney.danger = this.danger + newRoad.danger;
 				newJourney.difficlty = this.difficlty + newRoad.difficulty;
-				journeyRouter.possibleRoutes.add(newJourney);// adds the journey to the possible routes
+				JourneyRouter.possibleRoutes.add(newJourney);// adds the journey to the possible routes
 			}
 
 		}
-		journeyRouter.possibleRoutes.remove(this);// removes the current journey sins it has been extended
+		JourneyRouter.possibleRoutes.remove(this);// removes the current journey sins it has been extended
 	}
 
 	private void addPreviousWaypoints() {
-		for(Waypoint adding: journeyRouter.currentJourney.waypoints) {
+		for(Waypoint adding: JourneyRouter.currentJourney.waypoints) {
 			waypoints.addLast(adding);
 		}
 		
@@ -40,8 +40,8 @@ public class Journey {
 
 	private boolean checkNotAvoid(Waypoint check) {
 		boolean safe = true;
-		if (journeyRouter.avoidWaypoints != null) {
-			for (Waypoint avoid : journeyRouter.avoidWaypoints) {
+		if (JourneyRouter.avoidWaypoints != null) {
+			for (Waypoint avoid : JourneyRouter.avoidWaypoints) {
 				if (check == avoid) {
 					safe = false;
 				}
@@ -52,8 +52,8 @@ public class Journey {
 
 	public boolean goseToAllPoints() {
 		boolean allPoints = true;
-		if (journeyRouter.avoidWaypoints != null) {
-			for (Waypoint goTo : journeyRouter.goToWaypoints) {
+		if (JourneyRouter.avoidWaypoints != null) {
+			for (Waypoint goTo : JourneyRouter.goToWaypoints) {
 				if (!this.getWaypoints().contains(goTo)) {
 					allPoints = false;
 				}

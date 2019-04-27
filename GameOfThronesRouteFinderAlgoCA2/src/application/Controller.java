@@ -353,7 +353,7 @@ public class Controller {
 		System.out.println("ding");
 		int color = 0;
 		if (beginning != null && destination != null) {
-			for (Journey current : journeyRouter.router(beginning, destination,goTo,avoid, searchSetting)) {
+			for (Journey current : JourneyRouter.router(beginning, destination,goTo,avoid, searchSetting)) {
 				for (Waypoint currentPoint : current.getWaypoints()) {
 					for (Road r : currentPoint.getConnectedRoads()) {
 						int index = (current.getWaypoints().indexOf(currentPoint))+1;
