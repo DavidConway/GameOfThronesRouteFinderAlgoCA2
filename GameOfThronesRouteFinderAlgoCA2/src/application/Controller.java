@@ -242,30 +242,12 @@ public class Controller {
 		line.setOnMousePressed(e -> displayRoad(road));
 		//line.setOnMousePressed(e -> roadMenu(road));
 		
-		print("RoadStart: " + road.getStart().getName().getText());
 
 		mapAnchor.getChildren().add(line);
 		buildStart.setText("(Empty)");
 		buildEnd.setText("(Empty)");
 		activeRoad.setStart(null);
 		activeRoad.setEnd(null);
-	}
-
-	void print(String string) {
-		System.out.println(string);
-	}
-
-	private void roadMenu(Road road) {
-		if (activeMenu.isShowing()) {
-			activeMenu.hide();
-		}
-		System.out.print("In Road Menu");
-		activeMenu = new ContextMenu();
-
-		MenuItem item1 = new MenuItem("Remove Road");
-		//item1.setOnAction(e -> road.deleteRoad());
-		activeMenu.getItems().clear();
-		activeMenu.getItems().addAll(item1);
 	}
 
 	private void displayRoad(Road road) {
@@ -425,9 +407,7 @@ public class Controller {
 			line.getStrokeDashArray().addAll(25d, 15d);
 			
 			line.setOnMousePressed(e -> displayRoad(i));
-			line.setOnContextMenuRequested(e -> roadMenu(i));
 			
-			print("RoadStart: " + i.getStart().getName().getText());
 
 			mapAnchor.getChildren().add(line);
 			buildStart.setText("(Empty)");
