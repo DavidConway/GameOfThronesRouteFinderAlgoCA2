@@ -240,8 +240,8 @@ public class Controller {
 		Road road = new Road(startRoad, endRoad, (Math.sqrt(w * w + h * h)), line);
 
 		line.setOnMousePressed(e -> displayRoad(road));
-		line.setOnContextMenuRequested(e -> roadMenu(road));
-
+		//line.setOnMousePressed(e -> roadMenu(road));
+		
 		print("RoadStart: " + road.getStart().getName().getText());
 
 		mapAnchor.getChildren().add(line);
@@ -259,10 +259,11 @@ public class Controller {
 		if (activeMenu.isShowing()) {
 			activeMenu.hide();
 		}
+		System.out.print("In Road Menu");
 		activeMenu = new ContextMenu();
 
 		MenuItem item1 = new MenuItem("Remove Road");
-		item1.setOnAction(e -> road.deleteRoad());
+		//item1.setOnAction(e -> road.deleteRoad());
 		activeMenu.getItems().clear();
 		activeMenu.getItems().addAll(item1);
 	}

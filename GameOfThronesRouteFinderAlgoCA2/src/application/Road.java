@@ -28,6 +28,8 @@ public class Road {
 		this.end = end;
 		this.length = length;
 		this.setLine(line);
+		line.setOnMouseClicked(e-> deleteRoad(line));
+		
 		
 		allRouts.add(this);
 		start.addRoad(this);
@@ -55,7 +57,10 @@ public class Road {
 		this.end = end;
 	}
 
-	public void deleteRoad() {
+	public void deleteRoad(Line line) {
+		line.setDisable(true);
+		line.setVisible(false);
+		System.out.println("In delete road");
 		Integer thisIndex = Road.allRouts.indexOf(this);
 		for (Waypoint check : Waypoint.allWaypoints) {
 			ArrayList<Integer> checksRoad = check.getConnectedRoughts();
