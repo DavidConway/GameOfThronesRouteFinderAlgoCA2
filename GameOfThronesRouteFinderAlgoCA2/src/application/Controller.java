@@ -281,6 +281,7 @@ public class Controller {
 	private void remove(Waypoint waypoint) {
 		mapAnchor.getChildren().remove(waypoint.getIView());
 		mapAnchor.getChildren().remove(waypoint.getName());
+		waypoint.deleteWaypoint();
 	}
 
 	private void setEnd(Waypoint waypoint) {
