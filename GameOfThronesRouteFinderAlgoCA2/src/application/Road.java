@@ -57,10 +57,7 @@ public class Road {
 		this.end = end;
 	}
 
-	public void deleteRoad(Line line) {
-		line.setDisable(true);
-		line.setVisible(false);
-		System.out.println("In delete road");
+	public void deleteRoad() {
 		Integer thisIndex = Road.allRouts.indexOf(this);
 		for (Waypoint check : Waypoint.allWaypoints) {
 			ArrayList<Integer> checksRoad = check.getConnectedRoughts();
@@ -74,6 +71,12 @@ public class Road {
 			}
 		}
 		allRouts.remove(this);
+		
+	}
+	public void deleteRoad(Line line) {
+		line.setDisable(true);
+		line.setVisible(false);
+		deleteRoad();
 	}
 
 	public Waypoint getOpposite(Waypoint in) {
