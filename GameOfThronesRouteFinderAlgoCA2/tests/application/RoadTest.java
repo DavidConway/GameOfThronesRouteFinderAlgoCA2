@@ -17,6 +17,7 @@ class RoadTest {
 	void setUp() throws Exception {
 		w1 = new Waypoint();
 		w2 = new Waypoint();
+		line = new Line();
 		r1 = new Road(w1, w2, 5, line);
 		
 	}
@@ -26,6 +27,11 @@ class RoadTest {
 	void testDeleteRoad() {
 		r1.deleteRoad();
 		assertTrue(Road.allRoutes.isEmpty());
+	}
+	
+	@Test
+	void testGetOpposite() {
+		assertEquals(r1.getOpposite(w1), w2);
 	}
 
 }
