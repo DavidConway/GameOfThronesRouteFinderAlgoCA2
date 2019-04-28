@@ -43,13 +43,6 @@ public class Waypoint {
 		connectedRoads.add(newRoad);
 	}
 
-	/**
-	public void removeRoad(Road oldRoad) {
-		Integer removeInt = Road.allRouts.indexOf(oldRoad);
-		connectedRoadsIndexes.remove(removeInt);
-	}
-	**/
-
 	public ArrayList<Integer> getConnectedRoughts() {
 		return this.connectedRoadsIndexes;
 	}

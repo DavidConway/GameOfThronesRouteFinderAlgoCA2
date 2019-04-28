@@ -15,6 +15,10 @@ public class JourneyRouter {
 	public static ArrayList<Journey> router(Waypoint start, Waypoint end, Waypoint[] goTo, Waypoint[] avoid, int show) {
 		avoidWaypoints = avoid;
 		goToWaypoints = goTo;
+		
+		possibleRoutes = new ArrayList<Journey>();
+		finalRouths = new ArrayList<Journey>();
+				
 		Journey startPoint = new Journey();
 		showMode = show;
 		startPoint.getWaypoints().add(start);

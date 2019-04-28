@@ -334,6 +334,8 @@ public class Controller {
 		goTo = goToHold.toArray(new Waypoint[goToHold.size()]);
 		avoid = avoidHold.toArray(new Waypoint[goToHold.size()]);
 		
+		resetLines();
+		
 		System.out.println("ding");
 		int color = 0;
 		if (beginning != null && destination != null) {
@@ -362,6 +364,13 @@ public class Controller {
 	
 	
 	
+	private void resetLines() {
+		for( Road r : Road.allRoutes) {
+			r.getLine().setStroke(Color.GRAY);
+		}
+		
+	}
+
 	@FXML
 	void save() {
 			SaveLoad.save();
