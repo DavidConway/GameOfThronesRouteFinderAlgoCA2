@@ -341,17 +341,18 @@ public class Controller {
 		if (beginning != null && destination != null) {
 			for (Journey current : JourneyRouter.router(beginning, destination,goTo,avoid, searchSetting)) {
 				for (Waypoint currentPoint : current.getWaypoints()) {
-					for (Road r : currentPoint.getConnectedRoads()) {
+					for (Integer r : currentPoint.getConnectedRoads()) {
+						Road road = Road.allRoutes.get(r);
 						int index = (current.getWaypoints().indexOf(currentPoint))+1;
-						if (index < current.getWaypoints().size() && r.getOpposite(currentPoint) == current.getWaypoints().get(index)) {//finds with road to color
+						if (index < current.getWaypoints().size() && road.getOpposite(currentPoint) == current.getWaypoints().get(index)) {//finds with road to color
 							if(color == 0) {
-								r.getLine().setStroke(Color.RED);
+								road.getLine().setStroke(Color.RED);
 							}
 							else if(color == 1) {
-								r.getLine().setStroke(Color.GREEN);
+								road.getLine().setStroke(Color.GREEN);
 							}
 							else if(color == 2){
-								r.getLine().setStroke(Color.BLUE);
+								road.getLine().setStroke(Color.BLUE);
 							}
 						}
 					}

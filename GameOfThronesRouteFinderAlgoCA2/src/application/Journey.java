@@ -13,7 +13,7 @@ public class Journey {
 
 	public void extenOut() {// creats a new journeys that imclude the new waypoint at the end of each rode
 		Waypoint endPoint = waypoints.getLast(); // gets the end point of the current journey
-		for (Integer roadIndex : endPoint.getConnectedRoughts()) {
+		for (Integer roadIndex : endPoint.getConnectedRoads()) {
 			Road newRoad = Road.allRoutes.get(roadIndex); // gets the Road that will be used
 			Waypoint extendOut = newRoad.getOpposite(endPoint);// gets the next waypoint
 			Journey newJourney = new Journey(); // sets up for the new journey
@@ -52,7 +52,7 @@ public class Journey {
 
 	public boolean goseToAllPoints() {
 		boolean allPoints = true;
-		if (JourneyRouter.avoidWaypoints != null) {
+		if (JourneyRouter.goToWaypoints != null) {
 			for (Waypoint goTo : JourneyRouter.goToWaypoints) {
 				if (!this.getWaypoints().contains(goTo)) {
 					allPoints = false;

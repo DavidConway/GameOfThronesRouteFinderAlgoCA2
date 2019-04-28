@@ -8,7 +8,7 @@ import javafx.scene.image.ImageView;
 public class Waypoint {
 	public static ArrayList<Waypoint> allWaypoints = new ArrayList<>();
 	private ArrayList<Integer> connectedRoadsIndexes = new ArrayList<>();
-	private ArrayList<Road> connectedRoads = new ArrayList<>();
+	//private ArrayList<Road> connectedRoads = new ArrayList<>();
 	private double mapX, mapY;
 	private double[] length = new double[3];
 	private int[] difficulty = new int[3];
@@ -40,10 +40,10 @@ public class Waypoint {
 	public void addRoad(Road newRoad) {
 		int newRoadID = Road.allRoutes.indexOf(newRoad);
 		connectedRoadsIndexes.add(newRoadID);
-		connectedRoads.add(newRoad);
+		//connectedRoads.add(newRoad);
 	}
 
-	public ArrayList<Integer> getConnectedRoughts() {
+	public ArrayList<Integer> getConnectedRoads() {
 		return this.connectedRoadsIndexes;
 	}
 
@@ -57,7 +57,7 @@ public class Waypoint {
 
 	public void deleteWaypoint() {
 		while (this.connectedRoadsIndexes.size()>0) {
-			Road removeRoad = Road.allRoutes.get(0);
+			Road removeRoad = Road.allRoutes.get(connectedRoadsIndexes.get(0));
 			removeRoad.deleteRoad();
 		}
 		allWaypoints.remove(this);
@@ -71,13 +71,13 @@ public class Waypoint {
 		return nameField;
 	}
 
-	public ArrayList<Road> getConnectedRoads() {
+	/*public ArrayList<Road> getConnectedRoads() {
 		return connectedRoads;
-	}
+	}*/
 
-	public void setConnectedRoads(ArrayList<Road> connectedRoads) {
+	/*public void setConnectedRoads(ArrayList<Road> connectedRoads) {
 		this.connectedRoads = connectedRoads;
-	}
+	}*/
 
 	public double getLength(int i) {
 		return length[i];

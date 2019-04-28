@@ -60,15 +60,22 @@ public class Road {
 	public void deleteRoad() {
 		Integer thisIndex = Road.allRoutes.indexOf(this);
 		for (Waypoint check : Waypoint.allWaypoints) {
-			ArrayList<Integer> checksRoad = check.getConnectedRoughts();
+			ArrayList<Integer> checksRoad = check.getConnectedRoads();
 			if (checksRoad.contains(thisIndex)) {
 				checksRoad.remove(thisIndex);
 			}
-			for (Integer checkIndex : check.getConnectedRoughts()) {
-				if (checkIndex > thisIndex) {
-					checkIndex--;
-				}
+			//if(check.getConnectedRoads().size()>0) {
+				for (Integer checkIndex : check.getConnectedRoads()) {
+					if (checkIndex > thisIndex) {
+						int update = check.getConnectedRoads().indexOf((Integer)checkIndex);
+						Integer change =  check.getConnectedRoads().get(update);
+						change--;
+						check.getConnectedRoads().set(update, change);
+						// that thing did not want to update
+					}
+			//	}
 			}
+			
 		}
 		allRoutes.remove(this);
 		

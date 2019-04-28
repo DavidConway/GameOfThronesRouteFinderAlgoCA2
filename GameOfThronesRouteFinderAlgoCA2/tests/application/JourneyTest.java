@@ -10,22 +10,22 @@ import org.junit.jupiter.api.Test;
 
 class JourneyTest {
 	
-	Waypoint w1 = new Waypoint();
-	Waypoint w2 = new Waypoint();
-	Waypoint w3 = new Waypoint();
-	Waypoint w4 = new Waypoint();
-	Waypoint w5 = new Waypoint();
-	Road r1 = new Road(w1,w2,5.0, null);
-	Road r6 = new Road(w1,w4,3.0, null);
-	Road r3 = new Road(w1,w3,1.0, null);
+	Waypoint A;
+	Waypoint B;
+	Waypoint C;
+	Waypoint D;
+	Waypoint E;
 	
-	Road r2 = new Road(w2,w5,3.0, null);
+	Road AB;
+	Road AC;
+	Road AE;
 	
+	Road DB;
+	Road DC;
+	Road DE;
 	
-	Road r4 = new Road(w3,w5,1.0, null);
-	Road r5 = new Road(w3,w2,1.0, null);
-	
-	Road r7 = new Road(w4,w5,3.0, null);
+	Road EB;
+	Road EC;
 	
 
 	@BeforeAll
@@ -34,6 +34,24 @@ class JourneyTest {
 
 	@BeforeEach
 	void setUp() throws Exception {
+		Waypoint.allWaypoints = new ArrayList<>();
+		Road.allRoutes = new ArrayList<>();
+		A = new Waypoint();
+		B = new Waypoint();
+		C = new Waypoint();
+		D = new Waypoint();
+		E = new Waypoint();
+		
+		AB = new Road(A,B,2,1,3);
+		AC = new Road(A,C,3,2,1);
+		AE = new Road(A,E,1,3,2);
+		
+		DB = new Road(D,B,2,1,3);
+		DC = new Road(D,C,3,2,1);
+		DE = new Road(D,E,1,3,2);
+		
+		EB = new Road(E,B,20,20,20);
+		EC = new Road(E,C,20,20,20);
 		
 		
 		
@@ -41,21 +59,151 @@ class JourneyTest {
 	
 
 	@Test
-	void journey() {
-		JJourney journey = new JJourney(w1);
-		ArrayList<Waypoint> routes = new ArrayList<>();
-		routes.add(w2);
-		routes.add(w3);
-		routes.add(w1);
+	void journeyDan() {
+		Journey journey1 = new Journey();
+		journey1.waypoints.addLast(A);
+		journey1.waypoints.addLast(E);
+		journey1.waypoints.addLast(D);
 		
-		assertEquals(routes, journey.shortestDistance(w2));
+		Journey journey2 = new Journey();
+		journey2.waypoints.addLast(A);
+		journey2.waypoints.addLast(B);
+		journey2.waypoints.addLast(D);
+		
+		Journey journey3 = new Journey();
+		journey3.waypoints.addLast(A);
+		journey3.waypoints.addLast(C);
+		journey3.waypoints.addLast(D);
+		
+		JourneyRouter.router(A, D, null, null, 1);
+		
+		assertTrue(JourneyRouter.finalRouths.get(0).waypoints.equals(journey1.waypoints));
+		assertTrue(JourneyRouter.finalRouths.get(1).waypoints.equals(journey2.waypoints));
+		assertTrue(JourneyRouter.finalRouths.get(2).waypoints.equals(journey3.waypoints));
 	}
+	
 	@Test
-	void journeyDist() {
-		JJourney journey = new JJourney(w1);
-
+	void journeyLen() {
+		Journey journey1 = new Journey();
+		journey1.waypoints.addLast(A);
+		journey1.waypoints.addLast(E);
+		journey1.waypoints.addLast(D);
 		
-		assertEquals(w2.getLength(0), 2);
+		Journey journey2 = new Journey();
+		journey2.waypoints.addLast(A);
+		journey2.waypoints.addLast(B);
+		journey2.waypoints.addLast(D);
+		
+		Journey journey3 = new Journey();
+		journey3.waypoints.addLast(A);
+		journey3.waypoints.addLast(C);
+		journey3.waypoints.addLast(D);
+		
+		JourneyRouter.router(A, D, null, null, 0);
+		
+		assertTrue(JourneyRouter.finalRouths.get(0).waypoints.equals(journey2.waypoints));
+		assertTrue(JourneyRouter.finalRouths.get(1).waypoints.equals(journey3.waypoints));
+		assertTrue(JourneyRouter.finalRouths.get(2).waypoints.equals(journey1.waypoints));
+	}
+	
+	@Test
+	void journeyDif() {
+		Journey journey1 = new Journey();
+		journey1.waypoints.addLast(A);
+		journey1.waypoints.addLast(E);
+		journey1.waypoints.addLast(D);
+		
+		Journey journey2 = new Journey();
+		journey2.waypoints.addLast(A);
+		journey2.waypoints.addLast(B);
+		journey2.waypoints.addLast(D);
+		
+		Journey journey3 = new Journey();
+		journey3.waypoints.addLast(A);
+		journey3.waypoints.addLast(C);
+		journey3.waypoints.addLast(D);
+		
+		JourneyRouter.router(A, D, null, null, 2);
+		
+		assertTrue(JourneyRouter.finalRouths.get(0).waypoints.equals(journey3.waypoints));
+		assertTrue(JourneyRouter.finalRouths.get(1).waypoints.equals(journey1.waypoints));
+		assertTrue(JourneyRouter.finalRouths.get(2).waypoints.equals(journey2.waypoints));
+	}
+	
+	@Test
+	void journeyDel() {
+		
+		Journey journey1 = new Journey();
+		journey1.waypoints.addLast(A);
+		journey1.waypoints.addLast(B);
+		journey1.waypoints.addLast(D);
+		
+		Journey journey2 = new Journey();
+		journey2.waypoints.addLast(A);
+		journey2.waypoints.addLast(C);
+		journey2.waypoints.addLast(D);
+		
+		E.deleteWaypoint();
+		
+		JourneyRouter.router(A, D, null, null, 1);
+		
+		assertTrue(JourneyRouter.finalRouths.get(0).waypoints.equals(journey1.waypoints));
+		assertTrue(JourneyRouter.finalRouths.get(1).waypoints.equals(journey2.waypoints));
+	}
+	
+	@Test
+	void journeyAvoid() {
+		
+		Journey journey1 = new Journey();
+		journey1.waypoints.addLast(A);
+		journey1.waypoints.addLast(B);
+		journey1.waypoints.addLast(D);
+		
+		Journey journey2 = new Journey();
+		journey2.waypoints.addLast(A);
+		journey2.waypoints.addLast(C);
+		journey2.waypoints.addLast(D);
+		
+		Waypoint[] avoid = new Waypoint[1];
+		
+		avoid[0] = E;
+		
+		JourneyRouter.router(A, D, null, avoid, 1);
+		
+		assertTrue(JourneyRouter.finalRouths.get(0).waypoints.equals(journey1.waypoints));
+		assertTrue(JourneyRouter.finalRouths.get(1).waypoints.equals(journey2.waypoints));
+	}
+	
+	@Test
+	void journeyGoTo() {
+		
+		Journey journey1 = new Journey();
+		journey1.waypoints.addLast(A);
+		journey1.waypoints.addLast(E);
+		journey1.waypoints.addLast(D);
+		
+		Journey journey2 = new Journey();
+		journey2.waypoints.addLast(A);
+		journey2.waypoints.addLast(E);
+		journey2.waypoints.addLast(B);
+		journey2.waypoints.addLast(D);
+		
+		Journey journey3 = new Journey();
+		journey3.waypoints.addLast(A);
+		journey3.waypoints.addLast(B);
+		journey3.waypoints.addLast(E);
+		journey3.waypoints.addLast(D);
+		
+		
+		Waypoint[] goTo = new Waypoint[1];
+		
+		goTo[0] = E;
+		
+		JourneyRouter.router(A, D, goTo, null, 1);
+		
+		assertTrue(JourneyRouter.finalRouths.get(0).waypoints.equals(journey1.waypoints));
+		assertTrue(JourneyRouter.finalRouths.get(1).waypoints.equals(journey2.waypoints));
+		assertTrue(JourneyRouter.finalRouths.get(2).waypoints.equals(journey3.waypoints));
 	}
 	
 
