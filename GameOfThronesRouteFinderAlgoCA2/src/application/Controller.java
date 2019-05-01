@@ -53,7 +53,6 @@ public class Controller {
 	private MenuButton findMode;
 
 	ContextMenu activeMenu = new ContextMenu();
-	JJourney activeJourney;
 	Waypoint beginning, destination;
 	Road activeRoad = new Road();
 	Waypoint startRoad, endRoad;
@@ -180,11 +179,8 @@ public class Controller {
 		}
 		activeMenu = new ContextMenu();
 		MenuItem item1 = new MenuItem("Shortest");
-		item1.setOnAction(e -> activeJourney.shortestDistance(waypoint));
 		MenuItem item2 = new MenuItem("Safest");
-		item1.setOnAction(e -> activeJourney.leastDangerous(waypoint));
 		MenuItem item3 = new MenuItem("Easiest");
-		item1.setOnAction(e -> activeJourney.leastDifficult(waypoint));
 		activeMenu.getItems().addAll(item1, item2, item3);
 		return activeMenu;
 	}
@@ -270,62 +266,12 @@ public class Controller {
 		destination = waypoint;
 		System.out.println("" + destination.getMapX() + "" + destination.getMapY());
 		journeyEnd.setText(waypoint.getName().getText());
-		setJourneyInfo(waypoint);
-
-		//runChoice();
-	}
-
-	/*private void runChoice() {
-		for (Waypoint w: Waypoint.allWaypoints)
-		{
-			for (Road r : w.getConnectedRoads()) {
-				r.getLine().setStroke(Color.BEIGE.darker().darker());
-			}
-		}
-		if (searchSetting == 0) {
-			for (Waypoint w : activeJourney.shortestDistance(destination)) {
-				for (Road r : w.getConnectedRoads()) {
-					if (r.getEnd() == w.getLengthPrevious() || r.getStart() == w.getLengthPrevious()) {
-						r.getLine().setStroke(Color.RED);
-					}
-				}
-			}
-		} else if (searchSetting == 1) {
-			for (Waypoint w : activeJourney.leastDangerous(destination)) {
-				for (Road r : w.getConnectedRoads()) {
-					if (r.getEnd() == w.getDangerPrevious() || r.getStart() == w.getDangerPrevious()) {
-						r.getLine().setStroke(Color.RED);
-					}
-				}
-			}
-		} else if (searchSetting == 2) {
-			for (Waypoint w : activeJourney.leastDifficult(destination)) {
-				for (Road r : w.getConnectedRoads()) {
-					if (r.getEnd() == w.getDifficultyPrevious() || r.getStart() == w.getDifficultyPrevious()) {
-						r.getLine().setStroke(Color.RED);
-					}
-				}
-			}
-		}
-	}*/
-
-	private void setJourneyInfo(Waypoint waypoint) {
-		SDEase.setText(waypoint.getDifficulty(0) + "");
-		SDDanger.setText(waypoint.getDanger(0) + "");
-		SDDistance.setText(waypoint.getLength(0) + "");
-		LDDistance.setText(waypoint.getLength(1) + "");
-		LDDanger.setText(waypoint.getDanger(1) + "");
-		LDEase.setText(waypoint.getDifficulty(1) + "");
-		MEDistance.setText(waypoint.getLength(2) + "");
-		MEDanger.setText(waypoint.getDanger(2) + "");
-		MEEase.setText(waypoint.getDifficulty(2) + "");
 	}
 
 	private void setStart(Waypoint waypoint) {
 		beginning = waypoint;
 		System.out.println("" + beginning.getMapX() + "" + beginning.getMapY());
 		journeyStart.setText(waypoint.getName().getText());
-		//activeJourney = new JJourney(waypoint);
 	}
 
 	@FXML
@@ -424,7 +370,6 @@ public class Controller {
 			buildEnd.setText("(Empty)");
 			activeRoad.setStart(null);
 			activeRoad.setEnd(null);
-			//AShwaoudboawd
 		}
 		
 	}

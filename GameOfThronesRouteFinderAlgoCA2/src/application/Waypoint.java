@@ -8,14 +8,9 @@ import javafx.scene.image.ImageView;
 public class Waypoint {
 	public static ArrayList<Waypoint> allWaypoints = new ArrayList<>();
 	private ArrayList<Integer> connectedRoadsIndexes = new ArrayList<>();
-	//private ArrayList<Road> connectedRoads = new ArrayList<>();
 	private double mapX, mapY;
-	private double[] length = new double[3];
-	private int[] difficulty = new int[3];
-	private int[] danger = new int[3];
 	private TextField nameField;
 	private ImageView iView;
-	private Waypoint lengthPrevious, difficultyPrevious, dangerPrevious;
 
 	Waypoint(double x, double y) {
 		mapX = x;
@@ -40,7 +35,6 @@ public class Waypoint {
 	public void addRoad(Road newRoad) {
 		int newRoadID = Road.allRoutes.indexOf(newRoad);
 		connectedRoadsIndexes.add(newRoadID);
-		//connectedRoads.add(newRoad);
 	}
 
 	public ArrayList<Integer> getConnectedRoads() {
@@ -70,61 +64,4 @@ public class Waypoint {
 	public TextField getName() {
 		return nameField;
 	}
-
-	/*public ArrayList<Road> getConnectedRoads() {
-		return connectedRoads;
-	}*/
-
-	/*public void setConnectedRoads(ArrayList<Road> connectedRoads) {
-		this.connectedRoads = connectedRoads;
-	}*/
-
-	public double getLength(int i) {
-		return length[i];
-	}
-
-	public void setLength(int i, double length) {
-		this.length[i] = length;
-	}
-
-	public int getDifficulty(int i) {
-		return difficulty[i];
-	}
-
-	public void setDifficulty(int i, int difficulty) {
-		this.difficulty[i] = difficulty;
-	}
-
-	public int getDanger(int i) {
-		return danger[i];
-	}
-
-	public void setDanger(int i, int danger) {
-		this.danger[i] = danger;
-	}
-
-	public Waypoint getLengthPrevious() {
-		return lengthPrevious;
-	}
-
-	public void setLengthPrevious(Waypoint lengthPrevious) {
-		this.lengthPrevious = lengthPrevious;
-	}
-
-	public Waypoint getDifficultyPrevious() {
-		return difficultyPrevious;
-	}
-
-	public void setDifficultyPrevious(Waypoint difficultyPrevious) {
-		this.difficultyPrevious = difficultyPrevious;
-	}
-
-	public Waypoint getDangerPrevious() {
-		return dangerPrevious;
-	}
-
-	public void setDangerPrevious(Waypoint dangerPrevious) {
-		this.dangerPrevious = dangerPrevious;
-	}
-
 }
