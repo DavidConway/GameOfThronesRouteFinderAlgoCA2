@@ -24,28 +24,6 @@ public class Main extends Application {
 
 	public static void main(String[] args) {
 		launch(args);
-		/*Waypoint one = new Waypoint(1,2);
-		Waypoint one = new Waypoint(1,1);
-		Waypoint two = new Waypoint(2,2);
-		Waypoint three = new Waypoint (2,3);
-		Waypoint four = new Waypoint(2,1);
-		Waypoint five = new Waypoint(3,2);
-		
-		Route oneTwo = new Route(one,two,3.0);
-		Route twoFive = new Route(two,five,3.0);
-		
-		Route oneThree = new Route(one,three,1.0);
-		Route threeFive = new Route(three,five,1.0);
-		Route threeTwo = new Route(three,two,1.0);
-		
-		Route oneFour = new Route(one,four,3.0);
-		Route fourFive = new Route(four,five,3.0);
-		Route twoFour = new Route(two,four,3.0);
-		
-		for(Journey j: journeyRouter.router(one, three, 0)) {
-			System.out.println(j.toString());
-		}*/
-		System.out.println("BattlePass is shit");
 	}
 	
 	
